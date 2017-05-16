@@ -12,4 +12,5 @@ public interface RolesDAO {
     UserRole changeRole(@NotNull final String username, @NotNull UserRole.role_type type);
     UserRole addRole(@NotNull final String username, @NotNull UserRole.role_type type);
     UserRole deleteRole(@NotNull final String username);
+    UserRole[] getAllUsersRoles();
 }

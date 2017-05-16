@@ -1,6 +1,8 @@
 package ru.kurs_db.Controllers;
 
 import org.springframework.web.bind.annotation.*;
+import ru.kurs_db.Controllers.Errors.ErrorChangeException;
+import ru.kurs_db.JdbcDAO.Models.UserRole;
 import ru.kurs_db.Models.User;
 import ru.kurs_db.Responses.Response;
 import org.springframework.http.HttpStatus;
@@ -43,6 +45,7 @@ public class UserController extends InferiorController {
         }
         httpSession.setAttribute("userId", user.getId());
         httpSession.setAttribute("username", user.getUsername());
+        httpSession.setAttribute("isAdmin",jdbcRolesDAO.getRole(user.getUsername()) == UserRole.role_type.ADMIN);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new SuccessUserResponse(user.getId(), messageSource.getMessage("messages.ok", null, Locale.ENGLISH), null));
     }
@@ -89,8 +92,11 @@ public class UserController extends InferiorController {
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public ResponseEntity<Response> deleteUser(HttpSession httpSession) throws InvalidAttributeValueException {
+    public ResponseEntity<Response> deleteUser(HttpSession httpSession) throws InvalidAttributeValueException, ErrorChangeException {
         final Integer userId = (Integer) httpSession.getAttribute("userId");
+        if((Boolean) httpSession.getAttribute("isAdmin")){
+            throw new ErrorChangeException();
+        }
         if (userId == null) {
             throw new InvalidAttributeValueException();
         }
