@@ -9,16 +9,25 @@ public class User {
     private final Integer id;
     private final String username;
     private final String email;
-    private final String hashedPassord;
+    private final String hashedPassword;
 
     public User(@NotNull final Integer id,
                 @NotNull final String username,
                 @NotNull final String email,
-                @NotNull final String hashedPassord) {
+                @NotNull final String hashedPassword) {
         this.id = id;
         this.username = username;
         this.email = email;
-        this.hashedPassord = hashedPassord;
+        this.hashedPassword = hashedPassword;
+    }
+
+    public User(@NotNull final String username,
+                @NotNull final String email,
+                @NotNull final String hashedPassword) {
+        this.id = null;
+        this.username = username;
+        this.email = email;
+        this.hashedPassword = hashedPassword;
     }
 
     public final Integer getId() {
@@ -34,6 +43,7 @@ public class User {
     }
 
     public final String getHashedPassword() {
-        return this.hashedPassord;
+        return this.hashedPassword;
     }
 }
+

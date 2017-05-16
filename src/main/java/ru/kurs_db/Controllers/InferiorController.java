@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.kurs_db.Controllers.Errors.ErrorAccessException;
+import ru.kurs_db.Controllers.Errors.ErrorChangeException;
+import ru.kurs_db.JdbcDAO.JdbcRolesDAO;
 import ru.kurs_db.JdbcDAO.JdbcUserDAO;
 import ru.kurs_db.Responses.ErrorResponse;
 import ru.kurs_db.Responses.Response;
@@ -30,6 +32,9 @@ import java.util.Locale;
 public class InferiorController {
     @Autowired
     protected JdbcUserDAO jdbcUserDAO;
+
+    @Autowired
+    protected JdbcRolesDAO jdbcRolesDAO;
 
     @Autowired
     protected MessageSource messageSource;
@@ -57,6 +62,13 @@ public class InferiorController {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ResponseBody
     public Response handleErrorAccessException(ErrorAccessException e){
+        return new ErrorResponse(messageSource.getMessage("messages.forbidden",null,Locale.ENGLISH));
+    }
+
+    @ExceptionHandler(ErrorChangeException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ResponseBody
+    public Response handleErrorChangeException(ErrorChangeException e){
         return new ErrorResponse(messageSource.getMessage("messages.forbidden",null,Locale.ENGLISH));
     }
 

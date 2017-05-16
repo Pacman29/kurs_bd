@@ -1,6 +1,9 @@
 package ru.kurs_db.JdbcDAO;
 
 import org.jetbrains.annotations.Nullable;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
@@ -8,16 +11,34 @@ import ru.kurs_db.DAO.UserDAO;
 import ru.kurs_db.Models.User;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by lieroz on 6.05.17.
  */
+@Configuration
+@PropertySource("classpath:admin.properties")
 @Service
 public class JdbcUserDAO extends JdbcInferiorDAO implements UserDAO {
     public JdbcUserDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
+    }
+
+    @Value("${admin.username}")
+    private String a_name;
+
+    @Value("${admin.password}")
+    private  String a_password;
+
+    @Value("${admin.email}")
+    private  String a_email;
+
+    @PostConstruct
+    private void initAdmin(){
+        this.getJdbcTemplate().queryForObject("SELECT create_admin(?,?,?)",
+                new Object[]{this.a_name,this.a_email,this.a_password},(rs,num)->{return null;});
     }
 
     private final RowMapper<User> readUser = (rs, rowNum) ->

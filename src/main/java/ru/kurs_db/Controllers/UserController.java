@@ -28,6 +28,8 @@ public class UserController extends InferiorController {
         final String hashedPassword = passwordEncoder().encode(view.getPassword());
         final User user = jdbcUserDAO.insert(view.getUsername(), view.getEmail(), hashedPassword);
         httpSession.setAttribute("userId", user.getId());
+        httpSession.setAttribute("username", user.getUsername());
+
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new SuccessUserResponse(user.getId(), messageSource.getMessage("messages.created", null, Locale.ENGLISH), null));
     }
@@ -40,6 +42,7 @@ public class UserController extends InferiorController {
             throw new InvalidAttributeValueException();
         }
         httpSession.setAttribute("userId", user.getId());
+        httpSession.setAttribute("username", user.getUsername());
         return ResponseEntity.status(HttpStatus.OK).body(
                 new SuccessUserResponse(user.getId(), messageSource.getMessage("messages.ok", null, Locale.ENGLISH), null));
     }
@@ -65,6 +68,7 @@ public class UserController extends InferiorController {
         }
         final String hashedPassword = view.getPassword() == null ? null : passwordEncoder().encode(view.getPassword());
         final User user = jdbcUserDAO.update(userId, view.getUsername(), view.getEmail(), hashedPassword);
+        httpSession.setAttribute("username", user.getUsername());
         return ResponseEntity.status(HttpStatus.OK).body(
                 new SuccessUserResponse(userId, messageSource.getMessage("messages.ok", null, Locale.ENGLISH),
                         new UserPublicView(user)));
