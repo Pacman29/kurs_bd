@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import ru.kurs_db.DAO.UserDAO;
 import ru.kurs_db.Models.User;
@@ -37,12 +39,16 @@ public class JdbcUserDAO extends JdbcInferiorDAO implements UserDAO {
 
     @PostConstruct
     private void initAdmin(){
+        PasswordEncoder enc = new BCryptPasswordEncoder();
         this.getJdbcTemplate().queryForObject("SELECT create_admin(?,?,?)",
-                new Object[]{this.a_name,this.a_email,this.a_password},(rs,num)->{return null;});
+                new Object[]{this.a_name,this.a_email, enc.encode(this.a_password)},(rs, num)->{return null;});
+
+        //this.insert("test","123","pasw");
     }
 
     private final RowMapper<User> readUser = (rs, rowNum) ->
-            new User(rs.getInt("id"), rs.getString("username"), rs.getString("email"), rs.getString("password"));
+            new User(rs.getInt("id"), rs.getString("username"),
+                    rs.getString("email"), rs.getString("password"));
 
     @Override
     public final User insert(@NotNull final String username, @NotNull final String email, @NotNull final String password) {
