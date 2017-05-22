@@ -1,4 +1,4 @@
-package ru.kurs_db.Responses;
+package ru.kurs_db.Controllers.Responses;
 
 import org.jetbrains.annotations.NotNull;
 

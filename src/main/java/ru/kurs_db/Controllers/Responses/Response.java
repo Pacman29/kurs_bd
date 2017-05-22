@@ -1,4 +1,4 @@
-package ru.kurs_db.Responses;
+package ru.kurs_db.Controllers.Responses;
 
 /**
  * Created by lieroz on 7.05.17.

@@ -81,11 +81,13 @@ CREATE TABLE IF NOT EXISTS languages (
 
 CREATE TABLE IF NOT EXISTS dialects(
   dialect citext PRIMARY KEY UNIQUE NOT NULL,
-  language citext NOT NULL REFERENCES languages(language) ON DELETE CASCADE
+  language citext NOT NULL REFERENCES languages(language) ON DELETE CASCADE,
+  discription TEXT
 );
 
 CREATE TABLE IF NOT EXISTS slangs (
-  slang citext PRIMARY KEY UNIQUE NOT NULL
+  slang citext PRIMARY KEY UNIQUE NOT NULL,
+  discription TEXT
 );
 
 CREATE TABLE IF NOT EXISTS objfiles (
@@ -98,7 +100,8 @@ CREATE TABLE IF NOT EXISTS words (
   word citext NOT NULL,
   dialect citext NOT NULL REFERENCES  dialects(dialect) ON DELETE CASCADE,
   slang citext NOT NULL REFERENCES  slangs(slang),
-  file_id SERIAL NOT NULL REFERENCES  objfiles(id) ON DELETE CASCADE
+  file_id SERIAL NOT NULL REFERENCES  objfiles(id) ON DELETE CASCADE,
+  discription TEXT
 );
 
 CREATE INDEX IF NOT EXISTS words_word_dialect_slang_idx ON words(word, dialect, slang);

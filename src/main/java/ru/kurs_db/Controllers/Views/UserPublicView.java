@@ -1,6 +1,6 @@
-package ru.kurs_db.Views;
+package ru.kurs_db.Controllers.Views;
 
-import ru.kurs_db.Models.User;
+import ru.kurs_db.JdbcDAO.Models.User;
 
 /**
  * Created by lieroz on 7.05.17.

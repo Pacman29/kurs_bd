@@ -8,7 +8,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import ru.kurs_db.DAO.RolesDAO;
 import ru.kurs_db.JdbcDAO.Models.UserRole;
-import ru.kurs_db.Models.User;
 
 /**
  * Created by pacman29 on 15.05.17.
@@ -57,9 +56,10 @@ public class JdbcRolesDAO extends JdbcInferiorDAO implements RolesDAO{
     }
 
     @Override
-    public UserRole[] getAllUsersRoles() {
-        final String sql =  "SELECT users.username,roles.role FROM users LEFT OUTER JOIN roles ON users.username = role.username ";
-        return this.getJdbcTemplate().queryForObject(sql,(rs, rowNum) -> {
+    public UserRole[] getAllUsersRoles(@NotNull String username) {
+        final String sql =  "SELECT users.username,roles.role FROM users LEFT OUTER JOIN roles ON users.username = role.username " +
+                "WHERE users.username <> ?";
+        return this.getJdbcTemplate().queryForObject(sql,new Object[]{username},(rs, rowNum) -> {
             UserRole[] tmp = new UserRole[]{null};
             int i = 0;
             while (rs.next()){

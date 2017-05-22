@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.kurs_db.Controllers.Errors.ErrorAccessException;
 import ru.kurs_db.Controllers.Errors.ErrorChangeException;
+import ru.kurs_db.DropboxService.DropboxService;
+import ru.kurs_db.FileStorage.FileStorage;
 import ru.kurs_db.JdbcDAO.JdbcRolesDAO;
 import ru.kurs_db.JdbcDAO.JdbcUserDAO;
-import ru.kurs_db.Responses.ErrorResponse;
-import ru.kurs_db.Responses.Response;
+import ru.kurs_db.Controllers.Responses.ErrorResponse;
+import ru.kurs_db.Controllers.Responses.Response;
 
 import javax.management.InvalidAttributeValueException;
 import java.util.Locale;
@@ -35,6 +37,9 @@ public class InferiorController {
 
     @Autowired
     protected JdbcRolesDAO jdbcRolesDAO;
+
+    @Autowired
+    protected FileStorage filestorage = new DropboxService();
 
     @Autowired
     protected MessageSource messageSource;

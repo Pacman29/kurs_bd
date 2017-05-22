@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
  */
 @RestController
 @RequestMapping("/manageusers")
-public class UsersManagerController extends InferiorController{
+public class UsersManageController extends InferiorController{
 
     @RequestMapping(value = "/changerole", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE )

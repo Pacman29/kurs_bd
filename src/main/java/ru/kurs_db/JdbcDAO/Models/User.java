@@ -1,4 +1,4 @@
-package ru.kurs_db.Models;
+package ru.kurs_db.JdbcDAO.Models;
 
 import org.jetbrains.annotations.NotNull;
 

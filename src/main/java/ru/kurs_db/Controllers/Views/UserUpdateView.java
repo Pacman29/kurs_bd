@@ -1,4 +1,4 @@
-package ru.kurs_db.Views;
+package ru.kurs_db.Controllers.Views;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.internal.Nullable;

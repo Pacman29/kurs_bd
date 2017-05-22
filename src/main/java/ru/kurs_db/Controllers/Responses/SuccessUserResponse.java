@@ -1,8 +1,8 @@
-package ru.kurs_db.Responses;
+package ru.kurs_db.Controllers.Responses;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.kurs_db.Views.UserPublicView;
+import ru.kurs_db.Controllers.Views.UserPublicView;
 
 /**
  * Created by lieroz on 7.05.17.

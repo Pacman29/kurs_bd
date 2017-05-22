@@ -2,7 +2,7 @@ package ru.kurs_db.DAO;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import ru.kurs_db.Models.User;
+import ru.kurs_db.JdbcDAO.Models.User;
 
 /**
  * Created by lieroz on 6.05.17.
