@@ -9,14 +9,11 @@ import ru.kurs_db.Controllers.Errors.ErrorChangeException;
 import ru.kurs_db.Controllers.Responses.SuccessChangeRoleResponse;
 import ru.kurs_db.Controllers.Responses.SuccessUsersRolesResponse;
 import ru.kurs_db.Controllers.Views.ChangeRoleView;
-import ru.kurs_db.Controllers.Errors.ErrorAccessException;
 import ru.kurs_db.Controllers.Views.DeleteUserView;
-import ru.kurs_db.DAO.RolesDAO;
 import ru.kurs_db.JdbcDAO.Models.UserRole;
-import ru.kurs_db.Responses.Response;
+import ru.kurs_db.Controllers.Responses.Response;
 
 import javax.servlet.http.HttpSession;
-import java.util.Locale;
 
 /**
  * Created by pacman29 on 14.05.17.
@@ -80,8 +77,7 @@ public class UsersManagerController extends InferiorController{
             throw new ErrorAccessException();
         }
 
-
-        final UserRole[] urs = this.jdbcRolesDAO.getAllUsersRoles();
+        final UserRole[] urs = this.jdbcRolesDAO.getAllUsersRoles((String) httpSession.getAttribute("username"));
 
         return ResponseEntity.status(HttpStatus.OK).body( new SuccessUsersRolesResponse(urs));
     }
