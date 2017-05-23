@@ -31,20 +31,11 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
         return this.getJdbcTemplate().queryForObject(sql,new Object[]{word,dialect,slang,file_id,discription},readWord);
     }
 
-    private boolean nullchecker(Object value,String sqlvalue, StringBuilder sql, List<Object> arr){
-        if(value != null){
-            sql.append(sqlvalue + " = ?,");
-            arr.add(value);
-        }
-
-        return value != null;
-    }
-
     @Override
-    public Word change(Integer word_id, String new_word, String new_slang, String new_dialect, Integer new_file_id, String new_discription) {
-        StringBuilder sql  = new StringBuilder("UPDATE words SET ");
+    public Word change(@NotNull Integer word_id, String new_word, String new_slang, String new_dialect, Integer new_file_id, String new_discription) {
+        StringBuilder sql  = new StringBuilder("UPDATE getAllWords SET ");
         List<Object> tmp = new ArrayList<>();
-        nullchecker(new_word,"word",sql,tmp);
+        this.nullchecker(new_word,"word",sql,tmp);
         nullchecker(new_slang,"slang",sql,tmp);
         nullchecker(new_dialect,"dialect",sql,tmp);
         nullchecker(new_file_id,"file_id",sql,tmp);
@@ -57,13 +48,13 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
     }
 
     @Override
-    public Word delete(Integer id, String word) {
+    public Word delete(@NotNull Integer id,@NotNull String word) {
         String sql = "DELETE FROM words WHERE id = ? AND word = ? RETURNING *";
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{id,word},readWord);
     }
 
     @Override
-    public ArrayList<Word> words(Integer limit_s, Integer limit_f) {
+    public ArrayList<Word> getAllWords(@NotNull Integer limit_s, @NotNull Integer limit_f) {
         int size = limit_f - limit_f;
         String sql = "SELECT * FROM words LIMIT ? OFFSET ?";
         return this.getJdbcTemplate().queryForObject(sql,new Object[]{size,limit_s},(rs, rowNum) -> {

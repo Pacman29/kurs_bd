@@ -99,8 +99,8 @@ CREATE TABLE IF NOT EXISTS words (
   id SERIAL PRIMARY KEY,
   word citext NOT NULL,
   dialect citext NOT NULL REFERENCES  dialects(dialect) ON DELETE CASCADE,
-  slang citext NOT NULL REFERENCES  slangs(slang),
-  file_id SERIAL NOT NULL REFERENCES  objfiles(id) ON DELETE CASCADE,
+  slang citext,
+  file_id INTEGER NOT NULL REFERENCES  objfiles(id) ON DELETE CASCADE,
   discription TEXT
 );
 
