@@ -1,5 +1,6 @@
 package ru.kurs_db.DAO;
 
+import org.jetbrains.annotations.NotNull;
 import ru.kurs_db.JdbcDAO.Models.Word;
 
 import java.util.ArrayList;
@@ -23,4 +24,9 @@ public interface WordsDAO {
 
     Word delete(final Integer id, final String word);
     ArrayList<Word> getAllWords(final Integer limit_s, final Integer limit_f);
+    Word get(@NotNull final Integer id);
+    ArrayList<Word> getword(@NotNull final String word);
+    ArrayList<Word> getword(@NotNull final String word,
+                            final String slang,
+                            final String dialect);
 }

@@ -37,7 +37,7 @@ public class JdbcDialectsDAO extends JdbcInferiorDAO implements DialectsDAO {
 
     @Override
     public Dialect update(@NotNull String dialect, @NotNull String dialect_new, @NotNull String language_new) {
-        StringBuilder sql = new StringBuilder("UPDATE dialect SET ");
+        StringBuilder sql = new StringBuilder("UPDATE dialects SET ");
         List<Object> tmp = new ArrayList<>();
         nullchecker(dialect_new,"dialect",sql,tmp);
         nullchecker(language_new,"language",sql,tmp);

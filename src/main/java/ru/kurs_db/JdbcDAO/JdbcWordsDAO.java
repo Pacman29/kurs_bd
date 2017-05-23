@@ -60,11 +60,50 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
         return this.getJdbcTemplate().queryForObject(sql,new Object[]{size,limit_s},(rs, rowNum) -> {
             ArrayList<Word> tmp = new ArrayList<>();
             while (rs.next()){
-                tmp.add(new Word(rs.getInt("id"), rs.getString("word"),
-                        rs.getString("slang"),rs.getString("dialect"),
-                        rs.getInt("file_id"),rs.getString("discription")));
+                tmp.add(readWord.mapRow(rs,rowNum));
             }
             return tmp;
+        });
+    }
+
+    @Override
+    public Word get(@NotNull Integer id) {
+        String sql = "SELECT * FROM words WHERE id = ?";
+        return this.getJdbcTemplate().queryForObject(sql,new Object[]{id},readWord);
+    }
+
+    @Override
+    public ArrayList<Word> getword(@NotNull String word) {
+        String sql = "SELECT * FROM words WHERE word = ?";
+        return this.getJdbcTemplate().queryForObject(sql,new Object[]{word},(rs, rowNum) -> {
+            ArrayList<Word> tmp = new ArrayList<>();
+          while (rs.next()){
+              tmp.add(readWord.mapRow(rs,rowNum));
+          }
+          return tmp;
+        });
+    }
+
+    @Override
+    public ArrayList<Word> getword(@NotNull String word, String slang, String dialect) {
+        StringBuilder sql = new StringBuilder("SELECT * FROM words WHERE word = ? ");
+        ArrayList<Object> tmp = new ArrayList<>();
+        tmp.add(word);
+        if(slang != null){
+            sql.append("AND slang = ?");
+            tmp.add(slang);
+        }
+        if(dialect != null){
+            sql.append(" AND dialect = ?");
+            tmp.add(dialect);
+        }
+
+        return this.getJdbcTemplate().queryForObject(sql.toString(),tmp.toArray(),(rs, rowNum) -> {
+            ArrayList<Word> res = new ArrayList<>();
+            while (rs.next()){
+                res.add(readWord.mapRow(rs,rowNum));
+            }
+            return res;
         });
     }
 }

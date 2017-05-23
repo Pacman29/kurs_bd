@@ -111,3 +111,5 @@ CREATE TABLE IF NOT EXISTS symbols (
   dialect citext NOT NULL REFERENCES  dialects(dialect) ON DELETE CASCADE,
   file_id SERIAL NOT NULL REFERENCES  objfiles(id) ON DELETE CASCADE
 );
+
+CREATE INDEX IF NOT EXISTS symbols_symbol_dialect_idx ON symbols(symbol, dialect);
