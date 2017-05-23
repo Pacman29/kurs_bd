@@ -109,7 +109,8 @@ CREATE INDEX IF NOT EXISTS words_word_dialect_slang_idx ON words(word, dialect, 
 CREATE TABLE IF NOT EXISTS symbols (
   symbol citext NOT NULL PRIMARY KEY,
   dialect citext NOT NULL REFERENCES  dialects(dialect) ON DELETE CASCADE,
-  file_id SERIAL NOT NULL REFERENCES  objfiles(id) ON DELETE CASCADE
+  file_id SERIAL NOT NULL REFERENCES  objfiles(id) ON DELETE CASCADE,
+  UNIQUE (symbol,dialect)
 );
 
 CREATE INDEX IF NOT EXISTS symbols_symbol_dialect_idx ON symbols(symbol, dialect);
