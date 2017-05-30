@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @ComponentScan({"ru.kurs_db.Controllers",
-        "ru.kurs_db.JdbcDAO"
+        "ru.kurs_db.JdbcDAO", "ru.kurs_db.DropboxService"
 })
 public class Application {
     public static void main(String[] args) throws Exception {

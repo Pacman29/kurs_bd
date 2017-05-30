@@ -56,7 +56,7 @@ public class InferiorController {
     protected JdbcWordsDAO jdbcWordsDAO;
 
     @Autowired
-    protected FileStorage filestorage = new DropboxService();
+    protected DropboxService filestorage;
 
     @Autowired
     protected MessageSource messageSource;

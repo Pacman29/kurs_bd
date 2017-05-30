@@ -34,13 +34,11 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
     }
 
     @Override
-    public Word change(@NotNull Integer word_id, String new_word, String new_slang, String new_dialect, Integer new_file_id, String new_discription) {
+    public Word change(@NotNull Integer word_id, String new_slang, String new_dialect, String new_discription) {
         StringBuilder sql  = new StringBuilder("UPDATE getAllWords SET ");
         List<Object> tmp = new ArrayList<>();
-        this.nullchecker(new_word,"word",sql,tmp);
         nullchecker(new_slang,"slang",sql,tmp);
         nullchecker(new_dialect,"dialect",sql,tmp);
-        nullchecker(new_file_id,"file_id",sql,tmp);
         nullchecker(new_discription,"discription",sql,tmp);
         sql.delete(sql.length()-1,sql.length());
         sql.append(" WHERE word_id = ? RETURNING *");
@@ -50,9 +48,9 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
     }
 
     @Override
-    public Word delete(@NotNull Integer id,@NotNull String word) {
-        String sql = "DELETE FROM words WHERE id = ? AND word = ? RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{id,word},readWord);
+    public Word delete(@NotNull Integer id) {
+        String sql = "DELETE FROM words WHERE id = ?  RETURNING *";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{id},readWord);
     }
 
     @Override

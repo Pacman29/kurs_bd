@@ -11,10 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import ru.kurs_db.Controllers.Responses.SuccessDictionaryManageResponse;
-import ru.kurs_db.Controllers.Views.CreateDialectView;
-import ru.kurs_db.Controllers.Views.CreateSlangView;
-import ru.kurs_db.Controllers.Views.CreateSymbolView;
-import ru.kurs_db.Controllers.Views.CreateWordView;
+import ru.kurs_db.Controllers.Views.*;
 import ru.kurs_db.Controllers.Responses.Response;
 import ru.kurs_db.JdbcDAO.Models.*;
 
@@ -87,6 +84,16 @@ public class DictionaryManageController extends InferiorController{
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
                 (String) httpSession.getAttribute("username")));
     }
+
+    @RequestMapping(value = "/changeword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> changeword (@RequestBody final ChangeWordView view, HttpSession httpSession) throws IOException, DbxException {
+        Word changed_word = this.jdbcWordsDAO.change(view.getWord_id(),view.getNew_slang(),view.getNew_dialect(),view.getNew_discription());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
+
 
 
 }
