@@ -9,8 +9,8 @@ import java.util.ArrayList;
  * Created by pacman29 on 23.05.17.
  */
 public interface SymbolsDAO {
-    Symbol create(@NotNull String symbol, @NotNull String dialect, @NotNull Integer file_id );
-    Symbol update(@NotNull String symbol,@NotNull String dialect,@NotNull String symbol_new, @NotNull String dialect_new, @NotNull Integer file_id_new);
+    Symbol create(@NotNull String symbol, @NotNull String dialect, @NotNull Integer file_id, String discription);
+    Symbol update(@NotNull String symbol,@NotNull String dialect,String symbol_new,String dialect_new,Integer file_id_new,String discription);
     Symbol delete(@NotNull String symbol,@NotNull String dialect);
     ArrayList<Symbol> getAllSymbols(@NotNull final Integer limit_s,@NotNull final Integer limit_f);
     Symbol get(@NotNull String symbol,String dialect);

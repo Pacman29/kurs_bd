@@ -19,8 +19,7 @@ import ru.kurs_db.Controllers.Errors.ErrorAccessException;
 import ru.kurs_db.Controllers.Errors.ErrorChangeException;
 import ru.kurs_db.DropboxService.DropboxService;
 import ru.kurs_db.FileStorage.FileStorage;
-import ru.kurs_db.JdbcDAO.JdbcRolesDAO;
-import ru.kurs_db.JdbcDAO.JdbcUserDAO;
+import ru.kurs_db.JdbcDAO.*;
 import ru.kurs_db.Controllers.Responses.ErrorResponse;
 import ru.kurs_db.Controllers.Responses.Response;
 
@@ -37,6 +36,24 @@ public class InferiorController {
 
     @Autowired
     protected JdbcRolesDAO jdbcRolesDAO;
+
+    @Autowired
+    protected JdbcDialectsDAO jdbcDialectsDAO;
+
+    @Autowired
+    protected JdbcLanguageDAO jdbcLanguageDAO;
+
+    @Autowired
+    protected JdbcObjfilesDAO jdbcObjfilesDAO;
+
+    @Autowired
+    protected JdbcSlangsDAO jdbcSlangsDAO;
+
+    @Autowired
+    protected JdbcSymbolsDAO jdbcSymbolsDAO;
+
+    @Autowired
+    protected JdbcWordsDAO jdbcWordsDAO;
 
     @Autowired
     protected FileStorage filestorage = new DropboxService();

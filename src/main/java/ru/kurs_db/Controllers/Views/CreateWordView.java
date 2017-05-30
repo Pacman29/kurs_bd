@@ -12,20 +12,17 @@ import java.io.File;
 public class CreateWordView {
     private String word;
     private String slang;
-    private String language;
     private String dialect;
     private MultipartFile file;
     private String discription;
 
     public CreateWordView(@JsonProperty("word") @NotNull final String word,
                           @JsonProperty("slang") @NotNull final String slang,
-                          @JsonProperty("language") @NotNull final String language,
                           @JsonProperty("dialect") @NotNull final String dialect,
                           @JsonProperty("file") @NotNull final MultipartFile file,
                           @JsonProperty("discription") final String discription) {
         this.word = word;
         this.slang = slang;
-        this.language = language;
         this.dialect = dialect;
         this.file = file;
         this.discription = discription;
@@ -37,10 +34,6 @@ public class CreateWordView {
 
     public String getSlang() {
         return slang;
-    }
-
-    public String getLanguage() {
-        return language;
     }
 
     public String getDialect() {

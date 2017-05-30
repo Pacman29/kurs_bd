@@ -19,18 +19,24 @@ public class JdbcLanguageDAO extends JdbcInferiorDAO implements LanguageDAO {
     }
 
     private final RowMapper<Language> readLanguage = (rs, rowNum) ->
-            new Language(rs.getString("language"));
+            new Language(rs.getString("language"),rs.getString("discription"));
 
     @Override
-    public Language create(@NotNull String name) {
-        String sql = "INSERT INTO languages (language) VALUES(?) RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{name},readLanguage);
+    public Language create(@NotNull String name, String discription) {
+        String sql = "INSERT INTO languages (language,discription) VALUES(?,?) RETURNING *";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{name,discription},readLanguage);
     }
 
     @Override
-    public Language update(@NotNull String oldname, @NotNull String newname) {
-        String sql = "UPDATE languges SET language = ? WHERE language = ? RETURNING *";
-        return  this.getJdbcTemplate().queryForObject(sql,new Object[]{newname,oldname},readLanguage);
+    public Language update(@NotNull String oldname, String newname, String discription) {
+        StringBuilder sql = new StringBuilder("UPDATE languges SET ");
+        ArrayList<Object> args = new ArrayList<>();
+        this.nullchecker(newname,"language",sql,args);
+        this.nullchecker(discription,"discription",sql,args);
+        sql.delete(sql.length()-1,sql.length());
+        sql.append("WHERE language = ? RETURNING *");
+        args.add(oldname);
+        return  this.getJdbcTemplate().queryForObject(sql.toString(),args.toArray(),readLanguage);
     }
 
     @Override

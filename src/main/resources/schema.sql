@@ -76,7 +76,8 @@ END;
 CREATE INDEX IF NOT EXISTS users_name_email_idx ON users(username, email);
 
 CREATE TABLE IF NOT EXISTS languages (
-  language citext PRIMARY KEY UNIQUE NOT NULL
+  language citext PRIMARY KEY UNIQUE NOT NULL,
+  discription TEXT
 );
 
 CREATE TABLE IF NOT EXISTS dialects(

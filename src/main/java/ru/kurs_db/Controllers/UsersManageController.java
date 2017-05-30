@@ -34,7 +34,7 @@ public class UsersManageController extends InferiorController{
 
         final String username = view.getUsername();
 
-        if(username == httpSession.getAttribute("username")){
+        if(username == (String) httpSession.getAttribute("username")){
             throw new ErrorAccessException();
         }
 

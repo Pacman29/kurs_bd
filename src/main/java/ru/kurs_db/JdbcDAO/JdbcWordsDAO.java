@@ -3,6 +3,7 @@ package ru.kurs_db.JdbcDAO;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Service;
 import ru.kurs_db.DAO.WordsDAO;
 import ru.kurs_db.JdbcDAO.Models.Word;
 
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by pacman29 on 20.05.17.
  */
+@Service
 public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
     public JdbcWordsDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);

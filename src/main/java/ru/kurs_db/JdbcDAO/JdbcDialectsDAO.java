@@ -1,6 +1,7 @@
 package ru.kurs_db.JdbcDAO;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
@@ -21,12 +22,12 @@ public class JdbcDialectsDAO extends JdbcInferiorDAO implements DialectsDAO {
 
     private final RowMapper<Dialect> readDialect = (rs, rowNum) ->
             new Dialect(rs.getString("dialect"),
-                    rs.getString("language"));
+                    rs.getString("language"),rs.getString("discription"));
 
     @Override
-    public Dialect create(@NotNull String dialect, @NotNull String language) {
-        String sql = "INSERT INTO dialects VALUES(dialect,language) VALUES (?,?) RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{dialect,language},readDialect);
+    public Dialect create(@NotNull String dialect, @NotNull String language, @Nullable String discription) {
+        String sql = "INSERT INTO dialects VALUES(dialect,language,discription) VALUES (?,?,?) RETURNING *";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{dialect,language,discription},readDialect);
     }
 
     @Override
@@ -36,11 +37,15 @@ public class JdbcDialectsDAO extends JdbcInferiorDAO implements DialectsDAO {
     }
 
     @Override
-    public Dialect update(@NotNull String dialect, @NotNull String dialect_new, @NotNull String language_new) {
+    public Dialect update(@NotNull String dialect,
+                          final String dialect_new,
+                          final String language_new,
+                          final String discription) {
         StringBuilder sql = new StringBuilder("UPDATE dialects SET ");
         List<Object> tmp = new ArrayList<>();
         nullchecker(dialect_new,"dialect",sql,tmp);
         nullchecker(language_new,"language",sql,tmp);
+        nullchecker(discription,"discription",sql,tmp);
         sql.delete(sql.length()-1,sql.length());
         sql.append(" WHERE dialect = ? RETURNING *");
         tmp.add(dialect);
@@ -53,7 +58,7 @@ public class JdbcDialectsDAO extends JdbcInferiorDAO implements DialectsDAO {
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{limit_s,limit_f}, ((rs, rowNum) -> {
             ArrayList<Dialect> tmp = new ArrayList<>();
             while (rs.next()){
-                tmp.add(new Dialect(rs.getString("dialect"),rs.getString("language")));
+                tmp.add(readDialect.mapRow(rs,rowNum));
             }
             return tmp;
         }));

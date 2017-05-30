@@ -9,8 +9,9 @@ import java.util.ArrayList;
  * Created by pacman29 on 23.05.17.
  */
 public interface SlangsDAO {
-    Slang create (@NotNull final String slang);
+    Slang create (@NotNull final String slang, final String discription);
     Slang delete (@NotNull final String slang);
-    Slang update (@NotNull final String slang, @NotNull final String slang_new);
+    Slang update (@NotNull final String slang, final String slang_new, final String discription);
+    Slang get(@NotNull String slang);
     ArrayList<Slang> getAllSlangs(final Integer limit_s, final Integer limit_f);
 }

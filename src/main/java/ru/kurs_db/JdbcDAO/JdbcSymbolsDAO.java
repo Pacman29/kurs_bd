@@ -21,21 +21,24 @@ public class JdbcSymbolsDAO extends JdbcInferiorDAO implements SymbolsDAO{
 
     private final RowMapper<Symbol> readSymbol = (rs, rowNum) ->
             new Symbol(rs.getString("symbol"),
-                    rs.getString("dialect"),rs.getInt("file_id"));
+                    rs.getString("dialect"),
+                    rs.getInt("file_id"),
+                    rs.getString("discription"));
 
     @Override
-    public Symbol create(@NotNull String symbol, @NotNull String dialect, @NotNull Integer file_id) {
-        String sql = "INSERT INTO symbols VALUES(symbol,dialect,file_id) VALUES (?,?,?) RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{symbol,dialect,file_id},readSymbol);
+    public Symbol create(@NotNull String symbol, String dialect, Integer file_id, String discription) {
+        String sql = "INSERT INTO symbols VALUES(symbol,dialect,file_id,discription) VALUES (?,?,?,?) RETURNING *";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{symbol,dialect,file_id,discription},readSymbol);
     }
 
     @Override
-    public Symbol update(@NotNull String symbol,@NotNull String dialect, @NotNull String symbol_new, @NotNull String dialect_new, @NotNull Integer file_id_new) {
+    public Symbol update(@NotNull String symbol,@NotNull String dialect,String symbol_new,String dialect_new,Integer file_id_new,String discription) {
         StringBuilder sql = new StringBuilder("UPDATE symbols SET ");
         List<Object> tmp = new ArrayList<>();
         nullchecker(symbol_new,"symbol",sql,tmp);
         nullchecker(dialect_new,"dialect",sql,tmp);
         nullchecker(file_id_new,"file_id",sql,tmp);
+        nullchecker(discription,"discription",sql,tmp);
         sql.delete(sql.length()-1,sql.length());
         sql.append(" WHERE symbol = ? AND dialect = ?  RETURNING *");
         tmp.add(symbol);
