@@ -28,7 +28,7 @@ public class JdbcLanguageDAO extends JdbcInferiorDAO implements LanguageDAO {
     }
 
     @Override
-    public Language update(@NotNull String oldname, String discription) {
+    public Language change(@NotNull String oldname, String discription) {
         StringBuilder sql = new StringBuilder("UPDATE languges SET ");
         ArrayList<Object> args = new ArrayList<>();
         this.nullchecker(discription,"discription",sql,args);

@@ -10,8 +10,9 @@ import java.util.ArrayList;
  */
 public interface LanguageDAO {
     Language create(@NotNull String name, String discription);
-    Language update(@NotNull String oldname, String discription);
+    Language change(@NotNull String oldname, String discription);
     Language delete(@NotNull String name);
     Language get(@NotNull String name);
     ArrayList<Language> get_all();
 }
+

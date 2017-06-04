@@ -85,6 +85,15 @@ public class DictionaryManageController extends InferiorController{
                 (String) httpSession.getAttribute("username")));
     }
 
+    @RequestMapping(value = "/createlanguage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> createlanguage (@RequestBody final CreateLanguageView view, HttpSession httpSession) throws IOException, DbxException {
+        Language created_language = this.jdbcLanguageDAO.create(view.getName(),view.getDiscription());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
+
     @RequestMapping(value = "/changeword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE )
     @ResponseBody
@@ -121,6 +130,15 @@ public class DictionaryManageController extends InferiorController{
                 (String) httpSession.getAttribute("username")));
     }
 
+    @RequestMapping(value = "/changelanguage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> changelanguage (@RequestBody final ChangeLanguageView view, HttpSession httpSession) throws IOException, DbxException {
+        Language changed_language = this.jdbcLanguageDAO.change(view.getName(),view.getDiscription());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
+
     @RequestMapping(value = "/deleteword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE )
     @ResponseBody
@@ -153,6 +171,15 @@ public class DictionaryManageController extends InferiorController{
     @ResponseBody
     public ResponseEntity<Response> deletesymbol (@RequestBody final DeleteSymbolView view, HttpSession httpSession) throws IOException, DbxException {
         Symbol deleted_symbol = this.jdbcSymbolsDAO.delete(view.getSymbol(),view.getDialect());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
+
+    @RequestMapping(value = "/deletelanguage", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> deletelanguage (@RequestBody final DeleteLanguageView view, HttpSession httpSession) throws IOException, DbxException {
+        Language deleted_language = this.jdbcLanguageDAO.delete(view.getName());
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
                 (String) httpSession.getAttribute("username")));
     }
