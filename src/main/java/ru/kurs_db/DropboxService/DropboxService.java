@@ -47,14 +47,14 @@ public class DropboxService implements FileStorage,ApplicationRunner{
 
     @Override
     public FileMetadata savefile(@NotNull MultipartFile File) throws IOException, DbxException {
-        final String date = new SimpleDateFormat("dd/MM/yyyy").format(System.currentTimeMillis());
-        final StringBuilder fileName = new StringBuilder("/");
+        final String date = new SimpleDateFormat("dd-MM-yyyy").format(System.currentTimeMillis());
+        final StringBuilder fileName = new StringBuilder();
         final UUID id = UUID.randomUUID();
         fileName.append(date);
         fileName.append("__");
-        fileName.append(File.getName());
-        fileName.append("__");
         fileName.append(id);
+        fileName.append("__");
+        fileName.append(File.getOriginalFilename());
         FileMetadata uploadedFile = dbxClientV2.files().uploadBuilder("/"+fileName).uploadAndFinish(File.getInputStream());
         return uploadedFile;
     }

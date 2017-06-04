@@ -59,9 +59,9 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
         String sql = "SELECT * FROM words LIMIT ? OFFSET ?";
         return this.getJdbcTemplate().queryForObject(sql,new Object[]{size,limit_s},(rs, rowNum) -> {
             ArrayList<Word> tmp = new ArrayList<>();
-            while (rs.next()){
+            do {
                 tmp.add(readWord.mapRow(rs,rowNum));
-            }
+            } while (rs.next());
             return tmp;
         });
     }
@@ -77,9 +77,9 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
         String sql = "SELECT * FROM words WHERE word = ?";
         return this.getJdbcTemplate().queryForObject(sql,new Object[]{word},(rs, rowNum) -> {
             ArrayList<Word> tmp = new ArrayList<>();
-          while (rs.next()){
+          do{
               tmp.add(readWord.mapRow(rs,rowNum));
-          }
+          } while (rs.next());
           return tmp;
         });
     }
@@ -100,16 +100,19 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
 
         return this.getJdbcTemplate().queryForObject(sql.toString(),tmp.toArray(),(rs, rowNum) -> {
             ArrayList<Word> res = new ArrayList<>();
-            while (rs.next()){
+            do{
                 res.add(readWord.mapRow(rs,rowNum));
-            }
+            } while (rs.next());
             return res;
         });
     }
 
     @Override
     public ArrayList<Word> search(String word, String dialect, String slang) {
-        StringBuilder sql = new StringBuilder("Select * FROM words WHERE ");
+        StringBuilder sql = new StringBuilder("Select * FROM words ");
+        if(word != null && dialect != null && slang != null){
+            sql.append(" WHERE ");
+        }
         ArrayList<Object> tmp = new ArrayList<>();
         if(word != null){
             sql.append(" word = ? AND");
@@ -126,9 +129,9 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
         sql.delete(sql.length()-3, sql.length());
         return this.getJdbcTemplate().queryForObject(sql.toString(),tmp.toArray(),(rs, rowNum) -> {
             ArrayList<Word> t = new ArrayList<>();
-            while (rs.next()){
+            do {
                 t.add(readWord.mapRow(rs,rowNum));
-            }
+            } while (rs.next());
             return t;
         });
     }

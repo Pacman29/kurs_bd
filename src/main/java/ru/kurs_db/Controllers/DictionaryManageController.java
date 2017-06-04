@@ -2,12 +2,14 @@ package ru.kurs_db.Controllers;
 
 import com.dropbox.core.DbxException;
 import com.dropbox.core.v2.files.FileMetadata;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import ru.kurs_db.Controllers.Responses.SuccessDictionaryManageResponse;
@@ -41,12 +43,13 @@ public class DictionaryManageController extends InferiorController{
         return factory.createMultipartConfig();
     }
 
-    @RequestMapping(value = "/createword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @RequestMapping(value = "/createword", method = RequestMethod.POST)
     @ResponseBody
-    public ResponseEntity<Response> createword (@RequestBody final CreateWordView view, HttpSession httpSession) throws IOException, DbxException {
-        FileMetadata savefile = filestorage.savefile(view.getFile());
+    public ResponseEntity<Response> createword (@RequestParam("json") final String json, @RequestParam("file") MultipartFile file, HttpSession httpSession) throws IOException, DbxException {
+        CreateWordView view = new ObjectMapper().readValue(json, CreateWordView.class);
+        FileMetadata savefile = filestorage.savefile(file);
         Objfile created_file = this.jdbcObjfilesDAO.create(savefile.getName());
+
         Word created_word = this.jdbcWordsDAO.create(view.getWord(),view.getSlang(),view.getDialect(),
                 created_file.getId(),view.getDiscription());
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(

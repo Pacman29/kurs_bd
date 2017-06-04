@@ -27,7 +27,7 @@ public class JdbcSymbolsDAO extends JdbcInferiorDAO implements SymbolsDAO{
 
     @Override
     public Symbol create(@NotNull String symbol, String dialect, Integer file_id, String discription) {
-        String sql = "INSERT INTO symbols VALUES(symbol,dialect,file_id,discription) VALUES (?,?,?,?) RETURNING *";
+        String sql = "INSERT INTO symbols (symbol,dialect,file_id,discription) VALUES (?,?,?,?) RETURNING *";
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{symbol,dialect,file_id,discription},readSymbol);
     }
 
@@ -57,16 +57,26 @@ public class JdbcSymbolsDAO extends JdbcInferiorDAO implements SymbolsDAO{
         String sql = "SELECT * FROM symbols LIMIT ? OFFSET ?";
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{limit_s,limit_f}, ((rs, rowNum) -> {
             ArrayList<Symbol> tmp = new ArrayList<>();
-            while (rs.next()){
+            do{
                 tmp.add(readSymbol.mapRow(rs,rowNum));
-            }
+            } while (rs.next());
             return tmp;
         }));
     }
 
     @Override
-    public Symbol get(@NotNull String symbol,@NotNull String dialect) {
+    public Symbol get(@NotNull char symbol,@NotNull String dialect) {
         String sql = "SELECT * FROM symbols WHERE symbol = ? AND dialect = ? ";
         return this.getJdbcTemplate().queryForObject(sql,new Object[]{symbol,dialect},readSymbol);
+    }
+
+    @Override
+    public ArrayList<Symbol> convertToSymbol(String word, String dialect) {
+        char[] symbols = word.toCharArray();
+        ArrayList<Symbol> result = new ArrayList<>();
+        for(int i = 0; i< symbols.length; ++i){
+            result.add(this.get(symbols[i],dialect));
+        }
+        return result;
     }
 }

@@ -26,7 +26,7 @@ public class JdbcDialectsDAO extends JdbcInferiorDAO implements DialectsDAO {
 
     @Override
     public Dialect create(@NotNull String dialect, @NotNull String language, @Nullable String discription) {
-        String sql = "INSERT INTO dialects VALUES(dialect,language,discription) VALUES (?,?,?) RETURNING *";
+        String sql = "INSERT INTO dialects (dialect,language,discription) VALUES (?,?,?) RETURNING *";
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{dialect,language,discription},readDialect);
     }
 
@@ -57,9 +57,9 @@ public class JdbcDialectsDAO extends JdbcInferiorDAO implements DialectsDAO {
         String sql = "SELECT * FROM dialects LIMIT ? OFFSET ?";
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{limit_s,limit_f}, ((rs, rowNum) -> {
             ArrayList<Dialect> tmp = new ArrayList<>();
-            while (rs.next()){
+            do{
                 tmp.add(readDialect.mapRow(rs,rowNum));
-            }
+            }while (rs.next());
             return tmp;
         }));
     }

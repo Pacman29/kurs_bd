@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS roles;
+/*DROP TABLE IF EXISTS roles;
 DROP TYPE IF EXISTS role_type CASCADE ;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS symbols;
@@ -7,7 +7,7 @@ DROP TABLE IF EXISTS objfiles;
 DROP TABLE IF EXISTS slangs;
 DROP TABLE IF EXISTS dialects;
 DROP TABLE IF EXISTS languages;
-
+*/
 CREATE EXTENSION IF NOT EXISTS CITEXT;
 
 CREATE TABLE IF NOT EXISTS users (
@@ -17,9 +17,9 @@ CREATE TABLE IF NOT EXISTS users (
   password TEXT NOT NULL,
   created TIMESTAMPTZ DEFAULT NOW()
 );
-
+/*
 CREATE TYPE  role_type AS ENUM ('admin','moderator');
-
+*/
 
 CREATE TABLE IF NOT EXISTS roles (
   role role_type NOT NULL,

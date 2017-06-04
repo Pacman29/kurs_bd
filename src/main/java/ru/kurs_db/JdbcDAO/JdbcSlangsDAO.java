@@ -24,7 +24,7 @@ public class JdbcSlangsDAO extends JdbcInferiorDAO implements SlangsDAO {
 
     @Override
     public Slang create(@NotNull String slang, String discription) {
-        String sql = "INSERT INTO slangs VALUES(slang,discription) VALUES (?,?) RETURNING *";
+        String sql = "INSERT INTO slangs (slang,discription) VALUES (?,?) RETURNING *";
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{slang,discription},readSlang);
     }
 
@@ -57,9 +57,9 @@ public class JdbcSlangsDAO extends JdbcInferiorDAO implements SlangsDAO {
         String sql = "SELECT * FROM slangs LIMIT ? OFFSET ?";
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{limit_s,limit_f}, ((rs, rowNum) -> {
             ArrayList<Slang> tmp = new ArrayList<>();
-            while (rs.next()){
+            do{
                 tmp.add(readSlang.mapRow(rs,rowNum));
-            }
+            }while (rs.next());
             return tmp;
         }));
     }

@@ -13,18 +13,15 @@ public class CreateWordView {
     private String word;
     private String slang;
     private String dialect;
-    private MultipartFile file;
     private String discription;
 
     public CreateWordView(@JsonProperty("word") @NotNull final String word,
                           @JsonProperty("slang") @NotNull final String slang,
                           @JsonProperty("dialect") @NotNull final String dialect,
-                          @JsonProperty("file") @NotNull final MultipartFile file,
                           @JsonProperty("discription") final String discription) {
         this.word = word;
         this.slang = slang;
         this.dialect = dialect;
-        this.file = file;
         this.discription = discription;
     }
 
@@ -38,10 +35,6 @@ public class CreateWordView {
 
     public String getDialect() {
         return dialect;
-    }
-
-    public MultipartFile getFile() {
-        return file;
     }
 
     public String getDiscription() {

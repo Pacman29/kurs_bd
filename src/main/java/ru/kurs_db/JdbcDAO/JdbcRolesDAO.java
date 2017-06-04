@@ -25,9 +25,9 @@ public class JdbcRolesDAO extends JdbcInferiorDAO implements RolesDAO{
 
     @Override
     public UserRole.role_type getRole(@NotNull String username) throws EmptyResultDataAccessException{
-        final String sql = "SELECT type FROM roles WHERE username = ?";
+        final String sql = "SELECT role FROM roles WHERE username = ?";
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{username},(rs,rowNum)->{
-            return UserRole.role_type.valueOf(rs.getString("type"));
+            return UserRole.role_type.valueOf(rs.getString("role").toUpperCase());
         });
     }
 
@@ -62,9 +62,9 @@ public class JdbcRolesDAO extends JdbcInferiorDAO implements RolesDAO{
         return this.getJdbcTemplate().queryForObject(sql,new Object[]{username},(rs, rowNum) -> {
             UserRole[] tmp = new UserRole[]{null};
             int i = 0;
-            while (rs.next()){
+            do{
                 tmp[i++] = new UserRole(rs.getString("username"),rs.getString("role"));
-            }
+            } while (rs.next());
             return tmp;
         });
     }

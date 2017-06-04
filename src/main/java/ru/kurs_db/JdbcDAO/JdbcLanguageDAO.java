@@ -55,9 +55,9 @@ public class JdbcLanguageDAO extends JdbcInferiorDAO implements LanguageDAO {
         String sql = "SELECT * FROM languages";
         return  this.getJdbcTemplate().queryForObject(sql,new Object[]{},(rs, rowNum) -> {
             ArrayList<Language> tmp= new ArrayList<>();
-            while (rs.next()){
+            do {
                 tmp.add(readLanguage.mapRow(rs,rowNum));
-            }
+            }while (rs.next());
             return tmp;
         });
     }
