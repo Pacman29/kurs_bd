@@ -12,9 +12,9 @@ import java.util.ArrayList;
 public interface DialectsDAO {
     Dialect create (@NotNull final String dialect, @NotNull final String language, @Nullable String discription);
     Dialect delete (@NotNull final String dialect);
-    Dialect update (@NotNull final String dialect,
-                    final String dialect_new,
-                    final String language_new,
-                    final String discription);
+    Dialect change(@NotNull final String dialect,
+                   final String dialect_new,
+                   final String language_new,
+                   final String discription);
     ArrayList<Dialect> getAllDialects(final Integer limit_s, final Integer limit_f);
 }

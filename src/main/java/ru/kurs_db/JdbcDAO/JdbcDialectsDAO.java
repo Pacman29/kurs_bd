@@ -37,7 +37,7 @@ public class JdbcDialectsDAO extends JdbcInferiorDAO implements DialectsDAO {
     }
 
     @Override
-    public Dialect update(@NotNull String dialect,
+    public Dialect change(@NotNull String dialect,
                           final String dialect_new,
                           final String language_new,
                           final String discription) {

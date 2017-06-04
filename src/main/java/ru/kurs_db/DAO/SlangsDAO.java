@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public interface SlangsDAO {
     Slang create (@NotNull final String slang, final String discription);
     Slang delete (@NotNull final String slang);
-    Slang update (@NotNull final String slang, final String slang_new, final String discription);
+    Slang change (@NotNull final String slang, final String slang_new, final String discription);
     Slang get(@NotNull String slang);
     ArrayList<Slang> getAllSlangs(final Integer limit_s, final Integer limit_f);
 }

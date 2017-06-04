@@ -94,6 +94,66 @@ public class DictionaryManageController extends InferiorController{
                 (String) httpSession.getAttribute("username")));
     }
 
+    @RequestMapping(value = "/changedialect", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> changedialect (@RequestBody final ChangeDialectView view, HttpSession httpSession) throws IOException, DbxException {
+        Dialect changed_dialect = this.jdbcDialectsDAO.change(view.getDialect(),view.getNew_dialect(), view.getNew_language(), view.getNew_discription());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
 
+    @RequestMapping(value = "/changeslang", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> changeslang (@RequestBody final ChangeSlangView view, HttpSession httpSession) throws IOException, DbxException {
+        Slang changed_slang = this.jdbcSlangsDAO.change(view.getSlang(),view.getNew_Slang(),view.getDiscription());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
 
+    @RequestMapping(value = "/changesymbol", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> changesymbol (@RequestBody final ChangeSymbolView view, HttpSession httpSession) throws IOException, DbxException {
+        Symbol changed_symbol = this.jdbcSymbolsDAO.change(view.getSymbol(),view.getDialect(),view.getSymbol_new(),view.getDialect_new(),view.getFile_id_new(),view.getDiscription());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
+
+    @RequestMapping(value = "/deleteword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> deleteword (@RequestBody final DeleteWordView view, HttpSession httpSession) throws IOException, DbxException {
+        Word deleted_word = this.jdbcWordsDAO.delete(view.getId());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
+
+    @RequestMapping(value = "/deletedialect", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> deletedialect (@RequestBody final DeleteDialectView view, HttpSession httpSession) throws IOException, DbxException {
+        Dialect deleted_dialect = this.jdbcDialectsDAO.delete(view.getDialect());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
+
+    @RequestMapping(value = "/deleteslang", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> deleteslang (@RequestBody final DeleteSlangView view, HttpSession httpSession) throws IOException, DbxException {
+        Slang deleted_slang = this.jdbcSlangsDAO.delete(view.getSlang());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
+
+    @RequestMapping(value = "/deletesymbol", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE )
+    @ResponseBody
+    public ResponseEntity<Response> deletesymbol (@RequestBody final DeleteSymbolView view, HttpSession httpSession) throws IOException, DbxException {
+        Symbol deleted_symbol = this.jdbcSymbolsDAO.delete(view.getSymbol(),view.getDialect());
+        return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
+                (String) httpSession.getAttribute("username")));
+    }
 }

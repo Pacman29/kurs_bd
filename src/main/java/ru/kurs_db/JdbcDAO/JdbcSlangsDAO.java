@@ -35,7 +35,7 @@ public class JdbcSlangsDAO extends JdbcInferiorDAO implements SlangsDAO {
     }
 
     @Override
-    public Slang update(@NotNull String slang, String slang_new, String discription) {
+    public Slang change(@NotNull String slang, String slang_new, String discription) {
         StringBuilder sql = new StringBuilder("UPDATE slangs SET ");
         List<Object> tmp = new ArrayList<>();
         nullchecker(slang_new,"slang",sql,tmp);
