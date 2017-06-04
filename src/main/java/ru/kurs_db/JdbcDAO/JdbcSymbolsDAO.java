@@ -32,12 +32,11 @@ public class JdbcSymbolsDAO extends JdbcInferiorDAO implements SymbolsDAO{
     }
 
     @Override
-    public Symbol change(@NotNull String symbol, @NotNull String dialect, String symbol_new, String dialect_new, Integer file_id_new, String discription) {
+    public Symbol change(@NotNull String symbol, @NotNull String dialect, String symbol_new, String dialect_new, String discription) {
         StringBuilder sql = new StringBuilder("UPDATE symbols SET ");
         List<Object> tmp = new ArrayList<>();
         nullchecker(symbol_new,"symbol",sql,tmp);
         nullchecker(dialect_new,"dialect",sql,tmp);
-        nullchecker(file_id_new,"file_id",sql,tmp);
         nullchecker(discription,"discription",sql,tmp);
         sql.delete(sql.length()-1,sql.length());
         sql.append(" WHERE symbol = ? AND dialect = ?  RETURNING *");

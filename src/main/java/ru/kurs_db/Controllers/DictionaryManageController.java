@@ -128,7 +128,7 @@ public class DictionaryManageController extends InferiorController{
             consumes = MediaType.APPLICATION_JSON_VALUE )
     @ResponseBody
     public ResponseEntity<Response> changesymbol (@RequestBody final ChangeSymbolView view, HttpSession httpSession) throws IOException, DbxException {
-        Symbol changed_symbol = this.jdbcSymbolsDAO.change(view.getSymbol(),view.getDialect(),view.getSymbol_new(),view.getDialect_new(),view.getFile_id_new(),view.getDiscription());
+        Symbol changed_symbol = this.jdbcSymbolsDAO.change(view.getSymbol(),view.getDialect(),view.getSymbol_new(),view.getDialect_new(),view.getDiscription());
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
                 (String) httpSession.getAttribute("username")));
     }
