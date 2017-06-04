@@ -53,9 +53,9 @@ public class JdbcDialectsDAO extends JdbcInferiorDAO implements DialectsDAO {
     }
 
     @Override
-    public ArrayList<Dialect> getAllDialects(@NotNull final Integer limit_s,@NotNull final Integer limit_f) {
-        String sql = "SELECT * FROM dialects LIMIT ? OFFSET ?";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{limit_s,limit_f}, ((rs, rowNum) -> {
+    public ArrayList<Dialect> getAllDialects() {
+        String sql = "SELECT * FROM dialects";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{}, ((rs, rowNum) -> {
             ArrayList<Dialect> tmp = new ArrayList<>();
             do{
                 tmp.add(readDialect.mapRow(rs,rowNum));

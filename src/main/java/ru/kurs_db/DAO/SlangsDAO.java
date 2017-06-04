@@ -13,5 +13,5 @@ public interface SlangsDAO {
     Slang delete (@NotNull final String slang);
     Slang change (@NotNull final String slang, final String slang_new, final String discription);
     Slang get(@NotNull String slang);
-    ArrayList<Slang> getAllSlangs(final Integer limit_s, final Integer limit_f);
+    ArrayList<Slang> getAllSlangs();
 }

@@ -54,10 +54,9 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
     }
 
     @Override
-    public ArrayList<Word> getAllWords(@NotNull Integer limit_s, @NotNull Integer limit_f) {
-        int size = limit_f - limit_f;
-        String sql = "SELECT * FROM words LIMIT ? OFFSET ?";
-        return this.getJdbcTemplate().queryForObject(sql,new Object[]{size,limit_s},(rs, rowNum) -> {
+    public ArrayList<Word> getAllWords() {
+        String sql = "SELECT * FROM words ";
+        return this.getJdbcTemplate().queryForObject(sql,new Object[]{},(rs, rowNum) -> {
             ArrayList<Word> tmp = new ArrayList<>();
             do {
                 tmp.add(readWord.mapRow(rs,rowNum));

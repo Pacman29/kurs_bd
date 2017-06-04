@@ -21,7 +21,7 @@ public interface WordsDAO {
                 final String new_discription);
 
     Word delete(final Integer id);
-    ArrayList<Word> getAllWords(final Integer limit_s, final Integer limit_f);
+    ArrayList<Word> getAllWords();
     Word get(@NotNull final Integer id);
     ArrayList<Word> getword(@NotNull final String word);
     ArrayList<Word> getword(@NotNull final String word,

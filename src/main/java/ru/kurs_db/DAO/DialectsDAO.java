@@ -16,5 +16,5 @@ public interface DialectsDAO {
                    final String dialect_new,
                    final String language_new,
                    final String discription);
-    ArrayList<Dialect> getAllDialects(final Integer limit_s, final Integer limit_f);
+    ArrayList<Dialect> getAllDialects();
 }

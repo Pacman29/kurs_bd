@@ -52,9 +52,9 @@ public class JdbcSymbolsDAO extends JdbcInferiorDAO implements SymbolsDAO{
     }
 
     @Override
-    public ArrayList<Symbol> getAllSymbols(@NotNull final Integer limit_s,@NotNull final Integer limit_f) {
-        String sql = "SELECT * FROM symbols LIMIT ? OFFSET ?";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{limit_s,limit_f}, ((rs, rowNum) -> {
+    public ArrayList<Symbol> getAllSymbols() {
+        String sql = "SELECT * FROM symbols";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{}, ((rs, rowNum) -> {
             ArrayList<Symbol> tmp = new ArrayList<>();
             do{
                 tmp.add(readSymbol.mapRow(rs,rowNum));

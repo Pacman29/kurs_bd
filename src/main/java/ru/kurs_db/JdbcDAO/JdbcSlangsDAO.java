@@ -53,9 +53,9 @@ public class JdbcSlangsDAO extends JdbcInferiorDAO implements SlangsDAO {
     }
 
     @Override
-    public ArrayList<Slang> getAllSlangs(Integer limit_s, Integer limit_f) {
-        String sql = "SELECT * FROM slangs LIMIT ? OFFSET ?";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{limit_s,limit_f}, ((rs, rowNum) -> {
+    public ArrayList<Slang> getAllSlangs() {
+        String sql = "SELECT * FROM slangs";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{}, ((rs, rowNum) -> {
             ArrayList<Slang> tmp = new ArrayList<>();
             do{
                 tmp.add(readSlang.mapRow(rs,rowNum));
