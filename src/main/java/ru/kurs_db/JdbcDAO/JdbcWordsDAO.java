@@ -106,4 +106,30 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO{
             return res;
         });
     }
+
+    @Override
+    public ArrayList<Word> search(String word, String dialect, String slang) {
+        StringBuilder sql = new StringBuilder("Select * FROM words WHERE ");
+        ArrayList<Object> tmp = new ArrayList<>();
+        if(word != null){
+            sql.append(" word = ? AND");
+            tmp.add(word);
+        }
+        if(dialect != null){
+            sql.append(" dialect = ? AND");
+            tmp.add(dialect);
+        }
+        if(slang != null){
+            sql.append(" slang = ? AND");
+            tmp.add(slang);
+        }
+        sql.delete(sql.length()-3, sql.length());
+        return this.getJdbcTemplate().queryForObject(sql.toString(),tmp.toArray(),(rs, rowNum) -> {
+            ArrayList<Word> t = new ArrayList<>();
+            while (rs.next()){
+                t.add(readWord.mapRow(rs,rowNum));
+            }
+            return t;
+        });
+    }
 }

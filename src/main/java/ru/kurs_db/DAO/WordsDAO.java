@@ -27,4 +27,6 @@ public interface WordsDAO {
     ArrayList<Word> getword(@NotNull final String word,
                             final String slang,
                             final String dialect);
+
+    ArrayList<Word> search (String word, String dialect, String slang);
 }
