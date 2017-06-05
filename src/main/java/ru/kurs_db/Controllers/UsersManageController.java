@@ -28,22 +28,18 @@ public class UsersManageController extends InferiorController {
     @ResponseBody
     public ResponseEntity<Response> changerole(@RequestBody final ChangeRoleView view, HttpSession httpSession)
             throws ErrorAccessException, ErrorChangeException {
-
         if (!(Boolean) httpSession.getAttribute("isAdmin")) {
             throw new ErrorAccessException();
         }
-
         final String username = view.getUsername();
-
-        if (username == (String) httpSession.getAttribute("username")) {
+        if (username.equals(httpSession.getAttribute("username"))) {
             throw new ErrorAccessException();
         }
-
         final UserRole.role_type newrole = UserRole.role_type.valueOf(view.getNewrole());
-        if (newrole == UserRole.role_type.ADMIN) throw new ErrorChangeException();
-
+        if (newrole == UserRole.role_type.ADMIN) {
+            throw new ErrorChangeException();
+        }
         final UserRole ur = this.jdbcRolesDAO.changeRole(username, newrole);
-
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessChangeRoleResponse(ur.getUsername(), ur.getType().name()));
     }
 
@@ -55,15 +51,11 @@ public class UsersManageController extends InferiorController {
         if (!(Boolean) httpSession.getAttribute("isAdmin")) {
             throw new ErrorAccessException();
         }
-
         final String username = view.getUsername();
-
         if (username == httpSession.getAttribute("username")) {
             throw new ErrorChangeException();
         }
-
         final UserRole ur = this.jdbcRolesDAO.deleteRole(username);
-
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessChangeRoleResponse(ur.getUsername(), ur.getType().name()));
     }
 
@@ -77,5 +69,4 @@ public class UsersManageController extends InferiorController {
         final List<UserRole> urs = this.jdbcRolesDAO.getAllUsersRoles((String) httpSession.getAttribute("username"));
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessUsersRolesResponse(urs));
     }
-
 }

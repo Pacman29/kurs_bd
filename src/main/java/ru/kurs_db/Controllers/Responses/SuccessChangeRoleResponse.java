@@ -10,7 +10,7 @@ public class SuccessChangeRoleResponse implements Response {
     private final String username;
     private final String newtype;
 
-    public SuccessChangeRoleResponse(@NotNull String username,@NotNull String newtype) {
+    public SuccessChangeRoleResponse(@NotNull String username, @NotNull String newtype) {
         this.message = "User successfully changed the role";
         this.username = username;
         this.newtype = newtype;

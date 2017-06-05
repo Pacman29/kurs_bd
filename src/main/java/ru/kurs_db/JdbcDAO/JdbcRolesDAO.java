@@ -24,10 +24,16 @@ public class JdbcRolesDAO extends JdbcInferiorDAO implements RolesDAO {
             new UserRole(rs.getString("username"), rs.getString("role"));
 
     @Override
-    public UserRole.role_type getRole(@NotNull String username) throws EmptyResultDataAccessException {
+    public UserRole.role_type getRole(@NotNull String username) {
         final String sql = "SELECT role FROM roles WHERE username = ?";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{username}, (rs, rowNum) ->
-                UserRole.role_type.valueOf(rs.getString("role").toUpperCase()));
+        UserRole.role_type role = UserRole.role_type.USUAL;
+        try {
+            role = this.getJdbcTemplate().queryForObject(sql, new Object[]{username}, (rs, rowNum) ->
+                    UserRole.role_type.valueOf(rs.getString("role").toUpperCase()));
+        } catch (EmptyResultDataAccessException e) {
+            LOGGER.warn("Empty database access!");
+        }
+        return role;
     }
 
     @Override
@@ -35,8 +41,9 @@ public class JdbcRolesDAO extends JdbcInferiorDAO implements RolesDAO {
         if (type == UserRole.role_type.USUAL) {
             return this.deleteRole(username);
         }
-        return this.getJdbcTemplate().queryForObject("SELECT change_or_insert_role(?,?)",
-                new Object[]{username, type.name()}, readUserRole);
+        return this.getJdbcTemplate().queryForObject("INSERT INTO roles (role, username) VALUES (?, ?) " +
+                "ON CONFLICT (username) DO UPDATE SET role = ? WHERE roles.username = ? RETURNING *",
+                new Object[]{type.name(), username, type.name(), username}, readUserRole);
     }
 
     @Override
