@@ -8,6 +8,7 @@ import ru.kurs_db.DAO.LanguageDAO;
 import ru.kurs_db.JdbcDAO.Models.Language;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by pacman29 on 30.05.17.
@@ -51,14 +52,8 @@ public class JdbcLanguageDAO extends JdbcInferiorDAO implements LanguageDAO {
     }
 
     @Override
-    public ArrayList<Language> get_all() {
+    public List<Language> get_all() {
         String sql = "SELECT * FROM languages";
-        return  this.getJdbcTemplate().queryForObject(sql,new Object[]{},(rs, rowNum) -> {
-            ArrayList<Language> tmp= new ArrayList<>();
-            do {
-                tmp.add(readLanguage.mapRow(rs,rowNum));
-            }while (rs.next());
-            return tmp;
-        });
+        return  this.getJdbcTemplate().query(sql ,readLanguage);
     }
 }

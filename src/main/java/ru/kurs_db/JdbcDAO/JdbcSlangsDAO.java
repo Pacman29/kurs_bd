@@ -25,42 +25,36 @@ public class JdbcSlangsDAO extends JdbcInferiorDAO implements SlangsDAO {
     @Override
     public Slang create(@NotNull String slang, String discription) {
         String sql = "INSERT INTO slangs (slang,discription) VALUES (?,?) RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{slang,discription},readSlang);
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{slang, discription}, readSlang);
     }
 
     @Override
     public Slang delete(@NotNull String slang) {
         String sql = "DELETE FROM slangs WHERE slang = ? RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql,new Object[]{slang},readSlang);
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{slang}, readSlang);
     }
 
     @Override
     public Slang change(@NotNull String slang, String slang_new, String discription) {
         StringBuilder sql = new StringBuilder("UPDATE slangs SET ");
         List<Object> tmp = new ArrayList<>();
-        nullchecker(slang_new,"slang",sql,tmp);
-        nullchecker(discription,"discription",sql,tmp);
-        sql.delete(sql.length()-1,sql.length());
+        nullchecker(slang_new, "slang", sql, tmp);
+        nullchecker(discription, "discription", sql, tmp);
+        sql.delete(sql.length() - 1, sql.length());
         sql.append(" WHERE slang = ? RETURNING *");
         tmp.add(slang);
-        return this.getJdbcTemplate().queryForObject(sql.toString(),tmp.toArray(),readSlang);
+        return this.getJdbcTemplate().queryForObject(sql.toString(), tmp.toArray(), readSlang);
     }
 
     @Override
     public Slang get(@NotNull String slang) {
         String sql = "SELECT * FROM slangs WHERE slang = ?";
-        return this.getJdbcTemplate().queryForObject(sql,new Object[]{slang},readSlang);
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{slang}, readSlang);
     }
 
     @Override
-    public ArrayList<Slang> getAllSlangs() {
+    public List<Slang> getAllSlangs() {
         String sql = "SELECT * FROM slangs";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{}, ((rs, rowNum) -> {
-            ArrayList<Slang> tmp = new ArrayList<>();
-            do{
-                tmp.add(readSlang.mapRow(rs,rowNum));
-            }while (rs.next());
-            return tmp;
-        }));
+        return this.getJdbcTemplate().query(sql, new Object[]{}, readSlang);
     }
 }

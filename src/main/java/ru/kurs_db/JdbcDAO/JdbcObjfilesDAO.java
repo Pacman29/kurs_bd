@@ -4,16 +4,14 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
-import ru.kurs_db.DAO.objfilesDAO;
-import ru.kurs_db.DropboxService.DropboxService;
-import ru.kurs_db.FileStorage.FileStorage;
+import ru.kurs_db.DAO.ObjfilesDAO;
 import ru.kurs_db.JdbcDAO.Models.Objfile;
 
 /**
  * Created by pacman29 on 20.05.17.
  */
 @Service
-public class JdbcObjfilesDAO extends JdbcInferiorDAO implements objfilesDAO {
+public class JdbcObjfilesDAO extends JdbcInferiorDAO implements ObjfilesDAO {
     public JdbcObjfilesDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
@@ -36,6 +34,6 @@ public class JdbcObjfilesDAO extends JdbcInferiorDAO implements objfilesDAO {
     @Override
     public Objfile change(@NotNull Integer Id,@NotNull String new_filename) {
         String sql = "UPDATE objfiles SET name = ? WHERE id = ? RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql,new Object[]{new_filename,Id},readObjfile);
+        return this.getJdbcTemplate().queryForObject(sql,new Object[]{new_filename, Id},readObjfile);
     }
 }

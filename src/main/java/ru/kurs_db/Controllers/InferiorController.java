@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import ru.kurs_db.Controllers.Errors.ErrorAccessException;
 import ru.kurs_db.Controllers.Errors.ErrorChangeException;
 import ru.kurs_db.DropboxService.DropboxService;
-import ru.kurs_db.FileStorage.FileStorage;
 import ru.kurs_db.JdbcDAO.*;
 import ru.kurs_db.Controllers.Responses.ErrorResponse;
 import ru.kurs_db.Controllers.Responses.Response;
@@ -44,7 +43,7 @@ public class InferiorController {
     protected JdbcLanguageDAO jdbcLanguageDAO;
 
     @Autowired
-    protected JdbcObjfilesDAO jdbcObjfilesDAO;
+    protected JdbcObjfilesDAO jdbcJdbcObjfilesDAO;
 
     @Autowired
     protected JdbcSlangsDAO jdbcSlangsDAO;

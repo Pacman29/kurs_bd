@@ -48,7 +48,7 @@ public class DictionaryManageController extends InferiorController{
     public ResponseEntity<Response> createword (@RequestParam("json") final String json, @RequestParam("file") MultipartFile file, HttpSession httpSession) throws IOException, DbxException {
         CreateWordView view = new ObjectMapper().readValue(json, CreateWordView.class);
         FileMetadata savefile = filestorage.savefile(file);
-        Objfile created_file = this.jdbcObjfilesDAO.create(savefile.getName());
+        Objfile created_file = this.jdbcJdbcObjfilesDAO.create(savefile.getName());
 
         Word created_word = this.jdbcWordsDAO.create(view.getWord(),view.getSlang(),view.getDialect(),
                 created_file.getId(),view.getDiscription());
@@ -79,7 +79,7 @@ public class DictionaryManageController extends InferiorController{
     @ResponseBody
     public ResponseEntity<Response> createsymbol (@RequestBody final CreateSymbolView view, HttpSession httpSession) throws IOException, DbxException {
         FileMetadata savefile = filestorage.savefile(view.getFile());
-        Objfile created_file = this.jdbcObjfilesDAO.create(savefile.getName());
+        Objfile created_file = this.jdbcJdbcObjfilesDAO.create(savefile.getName());
         Symbol created_symbol = this.jdbcSymbolsDAO.create(view.getSymbol(),
                 view.getDialect(),
                 created_file.getId(),
