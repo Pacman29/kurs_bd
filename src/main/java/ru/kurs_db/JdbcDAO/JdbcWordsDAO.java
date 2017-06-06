@@ -87,7 +87,7 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO {
     @Override
     public List<Word> search(String word, String dialect, String slang) {
         StringBuilder sql = new StringBuilder("Select * FROM words ");
-        if (word != null && dialect != null && slang != null) {
+        if (word != null || dialect != null || slang != null) {
             sql.append(" WHERE ");
         }
         ArrayList<Object> tmp = new ArrayList<>();

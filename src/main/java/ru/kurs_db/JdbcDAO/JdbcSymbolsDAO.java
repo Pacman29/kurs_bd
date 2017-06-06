@@ -58,7 +58,7 @@ public class JdbcSymbolsDAO extends JdbcInferiorDAO implements SymbolsDAO {
     }
 
     @Override
-    public Symbol get(@NotNull char symbol, @NotNull String dialect) {
+    public Symbol get(char symbol, @NotNull String dialect) {
         String sql = "SELECT * FROM symbols WHERE symbol = ? AND dialect = ? ";
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{symbol, dialect}, readSymbol);
     }

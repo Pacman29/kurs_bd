@@ -93,6 +93,7 @@ CREATE TABLE IF NOT EXISTS symbols (
   symbol  CITEXT NOT NULL PRIMARY KEY,
   dialect CITEXT NOT NULL REFERENCES dialects (dialect) ON DELETE CASCADE,
   file_id SERIAL NOT NULL REFERENCES objfiles (id) ON DELETE CASCADE,
+  discription TEXT,
   UNIQUE (symbol, dialect)
 );
 
