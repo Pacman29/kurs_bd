@@ -28,21 +28,19 @@ import java.util.UUID;
 
 @Service
 @PropertySource("classpath:dropbox.properties")
-public class DropboxService implements FileStorage,ApplicationRunner{
-
-
+public class DropboxService implements FileStorage, ApplicationRunner {
     @Value("${dropbox.token}")
     private String AccessToken;
 
     @Value("${dropbox.files_folder}")
-    private  String FilesFolder;
+    private String FilesFolder;
 
     private DbxClientV2 dbxClientV2;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        DbxRequestConfig dbxRequestConfig = new DbxRequestConfig("dropbox", "en_US");
-        dbxClientV2 = new DbxClientV2(dbxRequestConfig,this.AccessToken);
+        DbxRequestConfig dbxRequestConfig = DbxRequestConfig.newBuilder("dropbox").withUserLocale("en_US").build();
+        dbxClientV2 = new DbxClientV2(dbxRequestConfig, this.AccessToken);
     }
 
     @Override
@@ -55,8 +53,7 @@ public class DropboxService implements FileStorage,ApplicationRunner{
         fileName.append(id);
         fileName.append("__");
         fileName.append(File.getOriginalFilename());
-        FileMetadata uploadedFile = dbxClientV2.files().uploadBuilder("/"+fileName).uploadAndFinish(File.getInputStream());
-        return uploadedFile;
+        return dbxClientV2.files().uploadBuilder("/" + fileName).uploadAndFinish(File.getInputStream());
     }
 
     @Override
@@ -66,7 +63,7 @@ public class DropboxService implements FileStorage,ApplicationRunner{
 
     @Override
     public FileMetadata getfile(@NotNull String filename) throws IOException, DbxException {
-        final File file = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + FilesFolder +"_"+ filename);
+        final File file = new File(FileSystemView.getFileSystemView().getDefaultDirectory() + FilesFolder + "_" + filename);
         OutputStream outputStream = new FileOutputStream(file);
         FileMetadata data = dbxClientV2.files().downloadBuilder(filename).download(outputStream);
         return data;

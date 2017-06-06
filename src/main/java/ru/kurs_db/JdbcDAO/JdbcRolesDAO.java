@@ -56,13 +56,12 @@ public class JdbcRolesDAO extends JdbcInferiorDAO implements RolesDAO {
     @Override
     public UserRole deleteRole(@NotNull String username) {
         final String sql = "DELETE FROM roles WHERE username = ? RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{username}, (rs, rowNum) ->
-                new UserRole(rs.getString("username"), UserRole.role_type.USUAL));
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{username}, readUserRole);
     }
 
     @Override
     public List<UserRole> getAllUsersRoles(@NotNull String username) {
-        final String sql = "SELECT users.username,roles.role FROM users LEFT OUTER JOIN roles ON users.username = role.username " +
+        final String sql = "SELECT users.username, roles.role FROM users LEFT OUTER JOIN roles ON users.username = roles.username " +
                 "WHERE users.username <> ?";
         return this.getJdbcTemplate().query(sql, new Object[]{username}, readUserRole);
     }

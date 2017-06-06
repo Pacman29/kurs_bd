@@ -23,11 +23,8 @@ import java.util.List;
 @RequestMapping("/manageusers")
 public class UsersManageController extends InferiorController {
 
-    @RequestMapping(value = "/changerole", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<Response> changerole(@RequestBody final ChangeRoleView view, HttpSession httpSession)
-            throws ErrorAccessException, ErrorChangeException {
+    @RequestMapping(value = "/changerole", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> changerole(@RequestBody final ChangeRoleView view, HttpSession httpSession) throws ErrorAccessException, ErrorChangeException {
         if (!(Boolean) httpSession.getAttribute("isAdmin")) {
             throw new ErrorAccessException();
         }
@@ -43,11 +40,8 @@ public class UsersManageController extends InferiorController {
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessChangeRoleResponse(ur.getUsername(), ur.getType().name()));
     }
 
-    @RequestMapping(value = "/deleteuser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
-    public ResponseEntity<Response> deleteuser(@RequestBody final DeleteUserView view, HttpSession httpSession)
-            throws ErrorChangeException, ErrorAccessException {
+    @RequestMapping(value = "/deleteuser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Response> deleteuser(@RequestBody final DeleteUserView view, HttpSession httpSession) throws ErrorChangeException, ErrorAccessException {
         if (!(Boolean) httpSession.getAttribute("isAdmin")) {
             throw new ErrorAccessException();
         }
@@ -59,9 +53,7 @@ public class UsersManageController extends InferiorController {
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessChangeRoleResponse(ur.getUsername(), ur.getType().name()));
     }
 
-    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseBody
+    @RequestMapping(value = "/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Response> users(HttpSession httpSession) throws ErrorChangeException, ErrorAccessException {
         if (!(Boolean) httpSession.getAttribute("isAdmin")) {
             throw new ErrorAccessException();

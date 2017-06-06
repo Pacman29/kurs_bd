@@ -42,8 +42,6 @@ public class JdbcUserDAO extends JdbcInferiorDAO implements UserDAO {
         PasswordEncoder enc = new BCryptPasswordEncoder();
         this.getJdbcTemplate().queryForObject("SELECT create_admin(?,?,?)",
                 new Object[]{this.a_name,this.a_email, enc.encode(this.a_password)},(rs, num)->{return null;});
-
-        //this.insert("test","123","pasw");
     }
 
     private final RowMapper<User> readUser = (rs, rowNum) ->

@@ -21,8 +21,8 @@ public class JdbcInferiorDAO extends JdbcDaoSupport {
 
     protected final static Logger LOGGER = LoggerFactory.getLogger(JdbcInferiorDAO.class);
 
-    protected boolean nullchecker(Object value,String sqlvalue, StringBuilder sql, List<Object> arr){
-        if(value != null){
+    protected boolean nullchecker(Object value, String sqlvalue, StringBuilder sql, List<Object> arr) {
+        if (value != null) {
             sql.append(sqlvalue + " = ?,");
             arr.add(value);
         }
