@@ -33,13 +33,13 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO {
 
     @Override
     public Word change(@NotNull Integer word_id, String new_slang, String new_dialect, String new_discription) {
-        StringBuilder sql = new StringBuilder("UPDATE getAllWords SET ");
+        StringBuilder sql = new StringBuilder("UPDATE words SET ");
         List<Object> tmp = new ArrayList<>();
         nullchecker(new_slang, "slang", sql, tmp);
         nullchecker(new_dialect, "dialect", sql, tmp);
         nullchecker(new_discription, "discription", sql, tmp);
         sql.delete(sql.length() - 1, sql.length());
-        sql.append(" WHERE word_id = ? RETURNING *");
+        sql.append(" WHERE id = ? RETURNING *");
         tmp.add(word_id);
         return this.getJdbcTemplate().queryForObject(sql.toString(), tmp.toArray(), readWord);
     }
