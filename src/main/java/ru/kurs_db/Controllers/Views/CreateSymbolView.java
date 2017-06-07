@@ -11,13 +11,11 @@ public class CreateSymbolView {
     private final String symbol;
     private final String dialect;
     private final String discription;
-    private MultipartFile file;
 
 
     public CreateSymbolView(@JsonProperty("symbol") @NotNull String symbol,
                             @JsonProperty("dialect") @NotNull String dialect,
-                            @JsonProperty("discription") @NotNull String discription,
-                            @JsonProperty("file") @NotNull MultipartFile file) {
+                            @JsonProperty("discription") @NotNull String discription) {
         this.symbol = symbol;
         this.dialect = dialect;
         this.discription = discription;
