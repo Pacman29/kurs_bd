@@ -19,7 +19,6 @@ public class CreateSymbolView {
         this.symbol = symbol;
         this.dialect = dialect;
         this.discription = discription;
-        this.file = file;
     }
 
     public String getSymbol() {
@@ -32,9 +31,5 @@ public class CreateSymbolView {
 
     public String getDialect() {
         return dialect;
-    }
-
-    public MultipartFile getFile() {
-        return file;
     }
 }
