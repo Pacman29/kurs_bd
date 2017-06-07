@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class DeleteLanguageView {
     private String name;
 
-    public DeleteLanguageView(@JsonProperty("name") String name) {
+    public DeleteLanguageView(@JsonProperty("language") String name) {
         this.name = name;
     }
 
