@@ -9,7 +9,7 @@ public class CreateLanguageView{
     private String name;
     private String discription;
 
-    public CreateLanguageView(@JsonProperty("name") String name,
+    public CreateLanguageView(@JsonProperty("language") String name,
                               @JsonProperty("discription") String discription) {
         this.name = name;
         this.discription = discription;

@@ -65,9 +65,10 @@ public class DictionaryManageController extends InferiorController {
                 (String) httpSession.getAttribute("username")));
     }
 
-    @RequestMapping(value = "/createsymbol", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Response> createsymbol(@RequestBody final CreateSymbolView view, HttpSession httpSession) throws IOException, DbxException {
-        FileMetadata savefile = filestorage.savefile(view.getFile());
+    @RequestMapping(value = "/createsymbol", method = RequestMethod.POST)
+    public ResponseEntity<Response> createsymbol(@RequestParam("json") final String json, @RequestParam("file") MultipartFile file, HttpSession httpSession) throws IOException, DbxException {
+        CreateSymbolView view = new ObjectMapper().readValue(json, CreateSymbolView.class);
+        FileMetadata savefile = filestorage.savefile(file);
         Objfile created_file = this.jdbcJdbcObjfilesDAO.create(savefile.getName());
         Symbol created_symbol = this.jdbcSymbolsDAO.create(view.getSymbol(),
                 view.getDialect(),
