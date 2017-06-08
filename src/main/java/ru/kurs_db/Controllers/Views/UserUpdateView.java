@@ -1,7 +1,7 @@
 package ru.kurs_db.Controllers.Views;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.istack.internal.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Created by lieroz on 7.05.17.
