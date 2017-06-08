@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Created by pacman29 on 04.06.17.
  */
-@CrossOrigin(origins = "https://Kursbd2017.herokuapp.com")
+@CrossOrigin(origins = "https://kursbd.herokuapp.com")
 @RestController
 @RequestMapping("/dictionary")
 public class DictionaryController extends InferiorController {
