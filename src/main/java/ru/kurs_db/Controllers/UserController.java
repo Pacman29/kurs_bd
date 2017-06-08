@@ -21,6 +21,7 @@ import java.util.Locale;
 /**
  * Created by lieroz on 6.05.17.
  */
+@CrossOrigin(origins = "https://Kursbd2017.herokuapp.com")
 @RestController
 @RequestMapping("/user")
 public class UserController extends InferiorController {

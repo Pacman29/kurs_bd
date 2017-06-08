@@ -24,6 +24,7 @@ import java.io.IOException;
 /**
  * Created by pacman29 on 20.05.17.
  */
+@CrossOrigin(origins = "https://Kursbd2017.herokuapp.com")
 @RestController
 @RequestMapping("/managedictionary")
 public class DictionaryManageController extends InferiorController {
