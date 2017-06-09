@@ -36,31 +36,31 @@ public class DictionaryController extends InferiorController {
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 
-    @RequestMapping(value = "/languages", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/languages", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Language>> languages(HttpSession httpSession) throws IOException, DbxException {
         List<Language> results = this.jdbcLanguageDAO.get_all();
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 
-    @RequestMapping(value = "/dialects", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/dialects", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Dialect>> dialects(HttpSession httpSession) throws IOException, DbxException {
         List<Dialect> results = this.jdbcDialectsDAO.getAllDialects();
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 
-    @RequestMapping(value = "/slangs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/slangs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Slang>> slangs(HttpSession httpSession) throws IOException, DbxException {
         List<Slang> results = this.jdbcSlangsDAO.getAllSlangs();
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 
-    @RequestMapping(value = "/words", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/words", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Word>> words(HttpSession httpSession) throws IOException, DbxException {
         List<Word> results = this.jdbcWordsDAO.getAllWords();
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 
-    @RequestMapping(value = "/symbols", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/symbols", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Symbol>> symbols(HttpSession httpSession) throws IOException, DbxException {
         List<Symbol> results = this.jdbcSymbolsDAO.getAllSymbols();
         return ResponseEntity.status(HttpStatus.OK).body(results);
