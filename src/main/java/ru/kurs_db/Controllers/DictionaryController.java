@@ -15,6 +15,7 @@ import ru.kurs_db.JdbcDAO.Models.*;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -25,9 +26,15 @@ import java.util.List;
 @RequestMapping("/dictionary")
 public class DictionaryController extends InferiorController {
     @RequestMapping(value = "/search", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Word>> search(@RequestBody final SearchView view, HttpSession httpSession) throws IOException, DbxException {
+    public ResponseEntity<List<WordWithURL>> search(@RequestBody final SearchView view, HttpSession httpSession) throws IOException, DbxException {
         List<Word> results = this.jdbcWordsDAO.search(view.getWord(), view.getDialect(), view.getSlang());
-        return ResponseEntity.status(HttpStatus.OK).body(results);
+        List<WordWithURL> res = new ArrayList<>();
+        for (Iterator iter = results.iterator(); iter.hasNext();){
+            Word tmp = (Word) iter.next();
+            String url = this.filestorage.getfilelink(tmp.getFile_name());
+            res.add(new WordWithURL(tmp,url));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
     @RequestMapping(value = "/wordinsymbol", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -55,9 +62,15 @@ public class DictionaryController extends InferiorController {
     }
 
     @RequestMapping(value = "/words", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Word>> words(HttpSession httpSession) throws IOException, DbxException {
+    public ResponseEntity<List<WordWithURL>> words(HttpSession httpSession) throws IOException, DbxException {
         List<Word> results = this.jdbcWordsDAO.getAllWords();
-        return ResponseEntity.status(HttpStatus.OK).body(results);
+        List<WordWithURL> res = new ArrayList<>();
+        for (Iterator iter = results.iterator(); iter.hasNext();){
+            Word tmp = (Word) iter.next();
+            String url = this.filestorage.getfilelink(tmp.getFile_name());
+            res.add(new WordWithURL(tmp,url));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
     @RequestMapping(value = "/symbols", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)

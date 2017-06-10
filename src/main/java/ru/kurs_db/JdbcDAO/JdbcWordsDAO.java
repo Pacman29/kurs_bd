@@ -22,7 +22,7 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO {
     private final RowMapper<Word> readWord = (rs, rowNum) ->
             new Word(rs.getInt("id"), rs.getString("word"),
                     rs.getString("slang"), rs.getString("dialect"),
-                    rs.getInt("file_id"), rs.getString("discription"));
+                    rs.getString("name"), rs.getString("discription"));
 
     @Override
     public Word create(@NotNull String word, @NotNull String slang, @NotNull String dialect,
@@ -52,25 +52,25 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO {
 
     @Override
     public List<Word> getAllWords() {
-        String sql = "SELECT * FROM words";
+        String sql = "SELECT * FROM words JOIN objfiles ON (words.file_id = objfiles.id)";
         return this.getJdbcTemplate().query(sql, readWord);
     }
 
     @Override
     public Word get(@NotNull Integer id) {
-        String sql = "SELECT * FROM words WHERE id = ?";
+        String sql = "SELECT * FROM words JOIN objfiles ON (words.file_id = objfiles.id) WHERE id = ?";
         return this.getJdbcTemplate().queryForObject(sql, new Object[]{id}, readWord);
     }
 
     @Override
     public List<Word> getword(@NotNull String word) {
-        String sql = "SELECT * FROM words WHERE word = ?";
+        String sql = "SELECT * FROM words JOIN objfiles ON (words.file_id = objfiles.id) WHERE word = ?";
         return this.getJdbcTemplate().query(sql, new Object[]{word}, readWord);
     }
 
     @Override
     public List<Word> getword(@NotNull String word, String slang, String dialect) {
-        StringBuilder sql = new StringBuilder("SELECT * FROM words WHERE word = ? ");
+        StringBuilder sql = new StringBuilder("SELECT * FROM words JOIN objfiles ON (words.file_id = objfiles.id) WHERE word = ? ");
         ArrayList<Object> tmp = new ArrayList<>();
         tmp.add(word);
         if (slang != null) {
@@ -86,7 +86,7 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO {
 
     @Override
     public List<Word> search(String word, String dialect, String slang) {
-        StringBuilder sql = new StringBuilder("Select * FROM words ");
+        StringBuilder sql = new StringBuilder("Select * FROM words JOIN objfiles ON (words.file_id = objfiles.id)");
         if (word != null || dialect != null || slang != null) {
             sql.append(" WHERE ");
         }
