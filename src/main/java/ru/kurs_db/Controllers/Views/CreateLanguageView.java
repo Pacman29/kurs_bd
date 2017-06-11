@@ -7,19 +7,19 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  */
 public class CreateLanguageView{
     private String name;
-    private String discription;
+    private String description;
 
     public CreateLanguageView(@JsonProperty("language") String name,
-                              @JsonProperty("discription") String discription) {
+                              @JsonProperty("description") String description) {
         this.name = name;
-        this.discription = discription;
+        this.description = description;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 }

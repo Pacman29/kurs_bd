@@ -5,18 +5,18 @@ package ru.kurs_db.JdbcDAO.Models;
  */
 public class Slang {
     final private String slang;
-    final private String discription;
+    final private String description;
 
-    public Slang(String slang, String discription) {
+    public Slang(String slang, String description) {
         this.slang = slang;
-        this.discription = discription;
+        this.description = description;
     }
 
     public String getSlang() {
         return slang;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 }

@@ -8,19 +8,19 @@ import org.jetbrains.annotations.NotNull;
  */
 public class CreateSlangView {
     private String slang;
-    private String discription;
+    private String description;
 
     public CreateSlangView(@JsonProperty("slang") @NotNull String slang,
-                           @JsonProperty("discription") String discription) {
+                           @JsonProperty("description") String description) {
         this.slang = slang;
-        this.discription = discription;
+        this.description = description;
     }
 
     public String getSlang() {
         return slang;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 }

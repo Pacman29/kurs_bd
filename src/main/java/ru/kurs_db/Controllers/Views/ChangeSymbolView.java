@@ -11,18 +11,18 @@ public class ChangeSymbolView {
     private String dialect;
     private String symbol_new;
     private String dialect_new;
-    private String discription;
+    private String description;
 
     public ChangeSymbolView(@JsonProperty("symbol") @NotNull String symbol,
                             @JsonProperty("dialect") @NotNull String dialect,
                             @JsonProperty("new_symbol") String symbol_new,
                             @JsonProperty("new_dialect") String dialect_new,
-                            @JsonProperty("discription") String discription) {
+                            @JsonProperty("description") String description) {
         this.symbol = symbol;
         this.dialect = dialect;
         this.symbol_new = symbol_new;
         this.dialect_new = dialect_new;
-        this.discription = discription;
+        this.description = description;
     }
 
     public String getSymbol() {
@@ -41,7 +41,7 @@ public class ChangeSymbolView {
         return dialect_new;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 }

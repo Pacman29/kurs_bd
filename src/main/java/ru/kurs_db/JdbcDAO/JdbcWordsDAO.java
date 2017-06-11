@@ -22,22 +22,22 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO {
     private final RowMapper<Word> readWord = (rs, rowNum) ->
             new Word(rs.getInt("id"), rs.getString("word"),
                     rs.getString("slang"), rs.getString("dialect"),
-                    rs.getString("name"), rs.getString("discription"));
+                    rs.getString("name"), rs.getString("description"),rs.getInt("file_id"));
 
     @Override
     public Word create(@NotNull String word, @NotNull String slang, @NotNull String dialect,
-                       @NotNull Integer file_id, String discription) {
-        String sql = "INSERT INTO words (word,dialect,slang,file_id,discription) VALUES(?,?,?,?,?) RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{word, dialect, slang, file_id, discription}, readWord);
+                       @NotNull Integer file_id, String description) {
+        String sql = "INSERT INTO words (word,dialect,slang,file_id,description) VALUES(?,?,?,?,?) RETURNING *";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{word, dialect, slang, file_id, description}, readWord);
     }
 
     @Override
-    public Word change(@NotNull Integer word_id, String new_slang, String new_dialect, String new_discription) {
+    public Word change(@NotNull Integer word_id, String new_slang, String new_dialect, String new_description) {
         StringBuilder sql = new StringBuilder("UPDATE words SET ");
         List<Object> tmp = new ArrayList<>();
         nullchecker(new_slang, "slang", sql, tmp);
         nullchecker(new_dialect, "dialect", sql, tmp);
-        nullchecker(new_discription, "discription", sql, tmp);
+        nullchecker(new_description, "description", sql, tmp);
         sql.delete(sql.length() - 1, sql.length());
         sql.append(" WHERE id = ? RETURNING *");
         tmp.add(word_id);

@@ -20,12 +20,12 @@ public class JdbcSlangsDAO extends JdbcInferiorDAO implements SlangsDAO {
     }
 
     private final RowMapper<Slang> readSlang = (rs, rowNum) ->
-            new Slang(rs.getString("slang"), rs.getString("discription"));
+            new Slang(rs.getString("slang"), rs.getString("description"));
 
     @Override
-    public Slang create(@NotNull String slang, String discription) {
-        String sql = "INSERT INTO slangs (slang,discription) VALUES (?,?) RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{slang, discription}, readSlang);
+    public Slang create(@NotNull String slang, String description) {
+        String sql = "INSERT INTO slangs (slang,description) VALUES (?,?) RETURNING *";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{slang, description}, readSlang);
     }
 
     @Override
@@ -35,11 +35,11 @@ public class JdbcSlangsDAO extends JdbcInferiorDAO implements SlangsDAO {
     }
 
     @Override
-    public Slang change(@NotNull String slang, String slang_new, String discription) {
+    public Slang change(@NotNull String slang, String slang_new, String description) {
         StringBuilder sql = new StringBuilder("UPDATE slangs SET ");
         List<Object> tmp = new ArrayList<>();
         nullchecker(slang_new, "slang", sql, tmp);
-        nullchecker(discription, "discription", sql, tmp);
+        nullchecker(description, "description", sql, tmp);
         sql.delete(sql.length() - 1, sql.length());
         sql.append(" WHERE slang = ? RETURNING *");
         tmp.add(slang);

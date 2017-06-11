@@ -9,20 +9,20 @@ public class WordWithURL {
     private String slang;
     private String dialect;
     private String url;
-    private String discription;
+    private String description;
 
     public WordWithURL(Integer id,
                 String word,
                 String slang,
                 String dialect,
                 String url,
-                String discription) {
+                String description) {
         this.id = id;
         this.word = word;
         this.slang = slang;
         this.dialect = dialect;
         this.url = url;
-        this.discription = discription;
+        this.description = description;
     }
 
     public WordWithURL(Word word, String url){
@@ -31,7 +31,7 @@ public class WordWithURL {
         this.slang = word.getSlang();
         this.dialect = word.getDialect();
         this.url = url;
-        this.discription = word.getDiscription();
+        this.description = word.getdescription();
     }
 
     public Integer getId() {
@@ -50,8 +50,8 @@ public class WordWithURL {
         return dialect;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 
     public String getUrl() {

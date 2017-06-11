@@ -13,16 +13,16 @@ public class CreateWordView {
     private String word;
     private String slang;
     private String dialect;
-    private String discription;
+    private String description;
 
     public CreateWordView(@JsonProperty("word") @NotNull final String word,
                           @JsonProperty("slang") @NotNull final String slang,
                           @JsonProperty("dialect") @NotNull final String dialect,
-                          @JsonProperty("discription") final String discription) {
+                          @JsonProperty("description") final String description) {
         this.word = word;
         this.slang = slang;
         this.dialect = dialect;
-        this.discription = discription;
+        this.description = description;
     }
 
     public String getWord() {
@@ -37,7 +37,7 @@ public class CreateWordView {
         return dialect;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 }

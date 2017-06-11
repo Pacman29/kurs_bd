@@ -7,18 +7,18 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Language {
     private final String language;
-    private final String discription;
+    private final String description;
 
-    public Language(@NotNull  String language, String discription) {
+    public Language(@NotNull  String language, String description) {
         this.language = language;
-        this.discription = discription;
+        this.description = description;
     }
 
     public String getLanguage() {
         return language;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 }

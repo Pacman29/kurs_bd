@@ -9,21 +9,24 @@ public class Word {
     private String word;
     private String slang;
     private String dialect;
+    private Integer file_id;
     private String file_name;
-    private String discription;
+    private String description;
 
     public Word(Integer id,
                 String word,
                 String slang,
                 String dialect,
                 String file_name,
-                String discription) {
+                String description,
+                Integer file_id) {
         this.id = id;
         this.word = word;
         this.slang = slang;
         this.dialect = dialect;
         this.file_name = file_name;
-        this.discription = discription;
+        this.description = description;
+        this.file_id = file_id;
     }
 
     public Integer getId() {
@@ -42,11 +45,15 @@ public class Word {
         return dialect;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 
     public String getFile_name() {
         return file_name;
+    }
+
+    public Integer getFile_id() {
+        return file_id;
     }
 }

@@ -8,12 +8,12 @@ import org.jetbrains.annotations.Nullable;
 public class Dialect {
     private final String dialect;
     private final String language;
-    private final String discription;
+    private final String description;
 
-    public Dialect(String dialect, String language, String discription) {
+    public Dialect(String dialect, String language, String description) {
         this.dialect = dialect;
         this.language = language;
-        this.discription = discription;
+        this.description = description;
     }
 
     public String getDialect() {
@@ -24,7 +24,7 @@ public class Dialect {
         return language;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 }

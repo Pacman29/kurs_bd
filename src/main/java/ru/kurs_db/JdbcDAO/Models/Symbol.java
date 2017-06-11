@@ -9,13 +9,13 @@ public class Symbol {
     private String symbol;
     private String dialect;
     private Integer file_id;
-    private String discription;
+    private String description;
 
-    public Symbol(@NotNull String symbol,@NotNull String dialect,@NotNull Integer file_id, String discription) {
+    public Symbol(@NotNull String symbol,@NotNull String dialect,@NotNull Integer file_id, String description) {
         this.symbol = symbol;
         this.dialect = dialect;
         this.file_id = file_id;
-        this.discription = discription;
+        this.description = description;
     }
 
     public String getSymbol() {
@@ -30,7 +30,7 @@ public class Symbol {
         return file_id;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 }

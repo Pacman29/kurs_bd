@@ -10,23 +10,23 @@ import org.springframework.web.multipart.MultipartFile;
 public class CreateSymbolView {
     private final String symbol;
     private final String dialect;
-    private final String discription;
+    private final String description;
 
 
     public CreateSymbolView(@JsonProperty("symbol") @NotNull String symbol,
                             @JsonProperty("dialect") @NotNull String dialect,
-                            @JsonProperty("discription") @NotNull String discription) {
+                            @JsonProperty("description") @NotNull String description) {
         this.symbol = symbol;
         this.dialect = dialect;
-        this.discription = discription;
+        this.description = description;
     }
 
     public String getSymbol() {
         return symbol;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 
     public String getDialect() {

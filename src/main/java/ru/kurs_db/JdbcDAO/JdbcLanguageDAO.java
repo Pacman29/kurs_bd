@@ -20,19 +20,19 @@ public class JdbcLanguageDAO extends JdbcInferiorDAO implements LanguageDAO {
     }
 
     private final RowMapper<Language> readLanguage = (rs, rowNum) ->
-            new Language(rs.getString("language"), rs.getString("discription"));
+            new Language(rs.getString("language"), rs.getString("description"));
 
     @Override
-    public Language create(@NotNull String name, String discription) {
-        String sql = "INSERT INTO languages (language,discription) VALUES(?,?) RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{name, discription}, readLanguage);
+    public Language create(@NotNull String name, String description) {
+        String sql = "INSERT INTO languages (language,description) VALUES(?,?) RETURNING *";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{name, description}, readLanguage);
     }
 
     @Override
-    public Language change(@NotNull String oldname, String discription) {
+    public Language change(@NotNull String oldname, String description) {
         StringBuilder sql = new StringBuilder("UPDATE languages SET ");
         ArrayList<Object> args = new ArrayList<>();
-        this.nullchecker(discription, "discription", sql, args);
+        this.nullchecker(description, "description", sql, args);
         sql.delete(sql.length() - 1, sql.length());
         sql.append("WHERE language = ? RETURNING *");
         args.add(oldname);

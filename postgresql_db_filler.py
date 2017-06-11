@@ -72,17 +72,17 @@ class DictionaryFiller(Filler):
 	def __init__(self):
 		super().__init__()
 		self.fill_languages_statement = \
-			"INSERT INTO languages (language, discription) VALUES (%(language)s, %(discription)s)"
+			"INSERT INTO languages (language, description) VALUES (%(language)s, %(description)s)"
 		self.fill_dialects_statement = \
-			"INSERT INTO dialects (dialect, language, discription) VALUES (%(dialect)s, %(language)s, %(discription)s)"
-		self.fill_slangs_statement = "INSERT INTO slangs (slang, discription) VALUES (%(slang)s, %(discription)s)"
+			"INSERT INTO dialects (dialect, language, description) VALUES (%(dialect)s, %(language)s, %(description)s)"
+		self.fill_slangs_statement = "INSERT INTO slangs (slang, description) VALUES (%(slang)s, %(description)s)"
 		self.fill_obj_files_statement = "INSERT INTO objfiles (name) VALUES (%(name)s)"
 		self.fill_symbols_statement = \
-			"INSERT INTO symbols (symbol, dialect, file_id, discription) " \
-			"VALUES (%(symbol)s, %(dialect)s, %(file_id)s, %(discription)s)"
+			"INSERT INTO symbols (symbol, dialect, file_id, description) " \
+			"VALUES (%(symbol)s, %(dialect)s, %(file_id)s, %(description)s)"
 		self.fill_words_statement = \
-			"INSERT INTO words (word, dialect, slang, file_id, discription) " \
-			"VALUES(%(word)s, %(dialect)s, %(slang)s, %(file_id)s, %(discription)s)"
+			"INSERT INTO words (word, dialect, slang, file_id, description) " \
+			"VALUES(%(word)s, %(dialect)s, %(slang)s, %(file_id)s, %(description)s)"
 
 	def generate_languages(self, count):
 		languages = []
@@ -90,7 +90,7 @@ class DictionaryFiller(Filler):
 			languages.append(
 				{
 					"language": generate_random_string(random.randint(4, 9)),
-					"discription": self.fake.sentence(nb_words=2, variable_nb_words=True)
+					"description": self.fake.sentence(nb_words=2, variable_nb_words=True)
 				}
 			)
 		return languages
@@ -103,7 +103,7 @@ class DictionaryFiller(Filler):
 				{
 					"dialect": generate_random_string(random.randint(3, 6)),
 					"language": languages[random.randint(0, len(languages) - 1)]["language"],
-					"discription": self.fake.sentence(nb_words=3, variable_nb_words=True)
+					"description": self.fake.sentence(nb_words=3, variable_nb_words=True)
 				}
 			)
 		return dialects
@@ -114,7 +114,7 @@ class DictionaryFiller(Filler):
 			slangs.append(
 				{
 					"slang": generate_random_string(random.randint(5, 8)),
-					"discription": self.fake.sentence(nb_words=3, variable_nb_words=True)
+					"description": self.fake.sentence(nb_words=3, variable_nb_words=True)
 				}
 			)
 		return slangs
@@ -137,7 +137,7 @@ class DictionaryFiller(Filler):
 					"symbol": generate_random_string(random.randint(2, 3)),
 					"dialect": dialects[random.randint(0, len(dialects) - 1)]["dialect"],
 					"file_id": random.randint(number + 1, number + len(dialects) - 1),
-					"discription": self.fake.sentence(nb_words=3, variable_nb_words=True)
+					"description": self.fake.sentence(nb_words=3, variable_nb_words=True)
 				}
 			)
 		return symbols
@@ -151,7 +151,7 @@ class DictionaryFiller(Filler):
 					"dialect": dialects[random.randint(0, len(dialects) - 1)]["dialect"],
 					"slang": slangs[random.randint(0, len(slangs) - 1)]["slang"],
 					"file_id": random.randint(number + 1, number + len(dialects) - 1),
-					"discription": self.fake.sentence(nb_words=3, variable_nb_words=True)
+					"description": self.fake.sentence(nb_words=3, variable_nb_words=True)
 				}
 			)
 		return words

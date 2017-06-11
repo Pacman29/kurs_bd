@@ -10,14 +10,14 @@ import org.jetbrains.annotations.Nullable;
 public class CreateDialectView {
     private String dialect;
     private String language;
-    private String discription;
+    private String description;
 
     public CreateDialectView(@JsonProperty("dialect") @NotNull String dialect,
                              @JsonProperty("language") @NotNull String language,
-                             @JsonProperty("discription") @Nullable String discription) {
+                             @JsonProperty("description") @Nullable String description) {
         this.dialect = dialect;
         this.language = language;
-        this.discription = discription;
+        this.description = description;
     }
 
     public String getDialect() {
@@ -28,7 +28,7 @@ public class CreateDialectView {
         return language;
     }
 
-    public String getDiscription() {
-        return discription;
+    public String getdescription() {
+        return description;
     }
 }

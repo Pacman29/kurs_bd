@@ -9,16 +9,16 @@ public class ChangeWordView {
     private final Integer word_id;
     private final String new_slang;
     private final String new_dialect;
-    private final String new_discription;
+    private final String new_description;
 
     public ChangeWordView(@JsonProperty("word_id") Integer word_id,
                           @JsonProperty("new_slang") String new_slang,
                           @JsonProperty("new_dialect") String new_dialect,
-                          @JsonProperty("new_discription") String new_discription) {
+                          @JsonProperty("new_description") String new_description) {
         this.word_id = word_id;
         this.new_slang = new_slang;
         this.new_dialect = new_dialect;
-        this.new_discription = new_discription;
+        this.new_description = new_description;
     }
 
     public Integer getWord_id() {
@@ -33,7 +33,7 @@ public class ChangeWordView {
         return new_dialect;
     }
 
-    public String getNew_discription() {
-        return new_discription;
+    public String getNew_description() {
+        return new_description;
     }
 }

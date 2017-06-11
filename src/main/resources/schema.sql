@@ -58,18 +58,18 @@ CREATE INDEX IF NOT EXISTS users_name_email_idx
 
 CREATE TABLE IF NOT EXISTS languages (
   language    CITEXT PRIMARY KEY UNIQUE NOT NULL,
-  discription TEXT
+  description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS dialects (
   dialect     CITEXT PRIMARY KEY UNIQUE NOT NULL,
   language    CITEXT                    NOT NULL REFERENCES languages (language) ON DELETE CASCADE ON UPDATE CASCADE,
-  discription TEXT
+  description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS slangs (
   slang       CITEXT PRIMARY KEY UNIQUE NOT NULL,
-  discription TEXT
+  description TEXT
 );
 
 CREATE TABLE IF NOT EXISTS objfiles (
@@ -83,7 +83,7 @@ CREATE TABLE IF NOT EXISTS words (
   dialect     CITEXT  NOT NULL REFERENCES dialects (dialect) ON DELETE CASCADE ON UPDATE CASCADE,
   slang       CITEXT,
   file_id     INTEGER NOT NULL REFERENCES objfiles (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  discription TEXT
+  description TEXT
 );
 
 CREATE INDEX IF NOT EXISTS words_word_dialect_slang_idx
@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS symbols (
   symbol  CITEXT NOT NULL PRIMARY KEY,
   dialect CITEXT NOT NULL REFERENCES dialects (dialect) ON DELETE CASCADE ON UPDATE CASCADE,
   file_id SERIAL NOT NULL REFERENCES objfiles (id) ON DELETE CASCADE ON UPDATE CASCADE,
-  discription TEXT,
+  description TEXT,
   UNIQUE (symbol, dialect)
 );
 
