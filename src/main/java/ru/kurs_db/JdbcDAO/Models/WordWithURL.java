@@ -1,29 +1,37 @@
 package ru.kurs_db.JdbcDAO.Models;
 
-
 /**
- * Created by pacman29 on 20.05.17.
+ * Created by Pacman29 on 11.06.2017.
  */
-public class Word {
+public class WordWithURL {
     private Integer id;
     private String word;
     private String slang;
     private String dialect;
-    private String file_name;
+    private String url;
     private String discription;
 
-    public Word(Integer id,
+    public WordWithURL(Integer id,
                 String word,
                 String slang,
                 String dialect,
-                String file_name,
+                String url,
                 String discription) {
         this.id = id;
         this.word = word;
         this.slang = slang;
         this.dialect = dialect;
-        this.file_name = file_name;
+        this.url = url;
         this.discription = discription;
+    }
+
+    public WordWithURL(Word word, String url){
+        this.id = word.getId();
+        this.word = word.getWord();
+        this.slang = word.getSlang();
+        this.dialect = word.getDialect();
+        this.url = url;
+        this.discription = word.getDiscription();
     }
 
     public Integer getId() {
@@ -46,7 +54,7 @@ public class Word {
         return discription;
     }
 
-    public String getFile_name() {
-        return file_name;
+    public String getUrl() {
+        return url;
     }
 }

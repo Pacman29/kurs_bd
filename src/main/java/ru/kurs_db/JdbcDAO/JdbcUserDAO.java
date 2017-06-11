@@ -1,7 +1,11 @@
 package ru.kurs_db.JdbcDAO;
 
+import com.dropbox.core.DbxRequestConfig;
+import com.dropbox.core.v2.DbxClientV2;
 import org.jetbrains.annotations.Nullable;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.ApplicationArguments;
+import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -23,7 +27,7 @@ import java.util.List;
 @Configuration
 @PropertySource("classpath:admin.properties")
 @Service
-public class JdbcUserDAO extends JdbcInferiorDAO implements UserDAO {
+public class JdbcUserDAO extends JdbcInferiorDAO implements UserDAO, ApplicationRunner {
     public JdbcUserDAO(JdbcTemplate jdbcTemplate) {
         super(jdbcTemplate);
     }
@@ -37,8 +41,8 @@ public class JdbcUserDAO extends JdbcInferiorDAO implements UserDAO {
     @Value("${admin.email}")
     private  String a_email;
 
-    @PostConstruct
-    private void initAdmin(){
+    @Override
+    public void run(ApplicationArguments args) throws Exception {
         PasswordEncoder enc = new BCryptPasswordEncoder();
         this.getJdbcTemplate().queryForObject("SELECT create_admin(?,?,?)",
                 new Object[]{this.a_name,this.a_email, enc.encode(this.a_password)},(rs, num)->{return null;});

@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * Created by pacman29 on 14.05.17.
  */
+@CrossOrigin(origins = "https://kursbd.herokuapp.com")
 @RestController
 @RequestMapping("/manageusers")
 public class UsersManageController extends InferiorController {
