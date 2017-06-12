@@ -25,10 +25,15 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO {
                     rs.getString("name"), rs.getString("description"),rs.getInt("file_id"));
 
     @Override
+    //TODO :: проверить возвращаемый результат
     public Word create(@NotNull String word, @NotNull String slang, @NotNull String dialect,
                        @NotNull Integer file_id, String description) {
         String sql = "INSERT INTO words (word,dialect,slang,file_id,description) VALUES(?,?,?,?,?) RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{word, dialect, slang, file_id, description}, readWord);
+        Word tmp = this.getJdbcTemplate().queryForObject(sql, new Object[]{word, dialect, slang, file_id, description}, (rs, rowNum) -> {
+            return new Word(rs.getInt("id"),rs.getString("word"),rs.getString("slang"),
+                    rs.getString("dialect"),rs.getString("description"),rs.getInt("file_id"));
+        });
+        return this.get(tmp.getId());
     }
 
     @Override
@@ -47,7 +52,10 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO {
     @Override
     public Word delete(@NotNull Integer id) {
         String sql = "DELETE FROM words WHERE id = ?  RETURNING *";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{id}, readWord);
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{id}, (rs, rowNum) -> {
+            return new Word(rs.getInt("id"),rs.getString("word"),rs.getString("slang"),
+                    rs.getString("dialect"),rs.getString("description"),rs.getInt("file_id"));
+        });
     }
 
     @Override

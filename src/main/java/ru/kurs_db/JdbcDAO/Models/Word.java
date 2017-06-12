@@ -29,6 +29,21 @@ public class Word {
         this.file_id = file_id;
     }
 
+    public Word(Integer id,
+                String word,
+                String slang,
+                String dialect,
+                String description,
+                Integer file_id) {
+        this.id = id;
+        this.word = word;
+        this.slang = slang;
+        this.dialect = dialect;
+        this.file_name = "";
+        this.description = description;
+        this.file_id = file_id;
+    }
+
     public Integer getId() {
         return id;
     }

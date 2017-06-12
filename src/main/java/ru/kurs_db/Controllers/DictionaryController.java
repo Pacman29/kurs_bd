@@ -38,8 +38,8 @@ public class DictionaryController extends InferiorController {
     }
 
     @RequestMapping(value = "/wordinsymbol", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Symbol>> converter(@RequestBody final ConverterView view, HttpSession httpSession) throws IOException, DbxException {
-        List<Symbol> results = this.jdbcSymbolsDAO.convertToSymbol(view.getWord(), view.getDialect());
+    public ResponseEntity<List<SymbolWithURL>> converter(@RequestBody final ConverterView view, HttpSession httpSession) throws IOException, DbxException {
+        List<SymbolWithURL> results = this.jdbcSymbolsDAO.convertToSymbol(view.getWord(), view.getDialect());
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 
@@ -74,8 +74,8 @@ public class DictionaryController extends InferiorController {
     }
 
     @RequestMapping(value = "/symbols", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<Symbol>> symbols(HttpSession httpSession) throws IOException, DbxException {
-        List<Symbol> results = this.jdbcSymbolsDAO.getAllSymbols();
+    public ResponseEntity<List<SymbolWithURL>> symbols(HttpSession httpSession) throws IOException, DbxException {
+        List<SymbolWithURL> results = this.jdbcSymbolsDAO.getAllSymbols();
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 }

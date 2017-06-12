@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Service;
 import ru.kurs_db.DAO.SymbolsDAO;
 import ru.kurs_db.JdbcDAO.Models.Symbol;
+import ru.kurs_db.JdbcDAO.Models.SymbolWithURL;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,13 @@ public class JdbcSymbolsDAO extends JdbcInferiorDAO implements SymbolsDAO {
                     rs.getString("dialect"),
                     rs.getInt("file_id"),
                     rs.getString("description"));
+
+    private final RowMapper<SymbolWithURL> readSymbolWithURL = (rs, rowNum) ->
+            new SymbolWithURL(rs.getString("symbol"),
+                    rs.getString("dialect"),
+                    rs.getInt("file_id"),
+                    rs.getString("description"),
+                    rs.getString("name"));
 
     @Override
     public Symbol create(@NotNull String symbol, String dialect, Integer file_id, String description) {
@@ -52,21 +60,22 @@ public class JdbcSymbolsDAO extends JdbcInferiorDAO implements SymbolsDAO {
     }
 
     @Override
-    public List<Symbol> getAllSymbols() {
-        String sql = "SELECT * FROM symbols";
-        return this.getJdbcTemplate().query(sql, new Object[]{}, readSymbol);
+    public List<SymbolWithURL> getAllSymbols() {
+        String sql = "SELECT * FROM symbols JOIN objfiles ON (symbols.file_id = objfiles.id)";
+        return this.getJdbcTemplate().query(sql, new Object[]{}, readSymbolWithURL);
     }
 
     @Override
-    public Symbol get(char symbol, @NotNull String dialect) {
-        String sql = "SELECT * FROM symbols WHERE symbol = ? AND dialect = ? ";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{symbol, dialect}, readSymbol);
+    public SymbolWithURL get(char symbol, @NotNull String dialect) {
+        String sql = "SELECT * FROM symbols JOIN objfiles ON (symbols.file_id = objfiles.id) WHERE symbol = ? AND dialect = ? ";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{symbol, dialect}, readSymbolWithURL);
     }
 
     @Override
-    public List<Symbol> convertToSymbol(String word, String dialect) {
+    //TODO:: возвращать url
+    public List<SymbolWithURL> convertToSymbol(String word, String dialect) {
         char[] symbols = word.toCharArray();
-        List<Symbol> result = new ArrayList<>();
+        List<SymbolWithURL> result = new ArrayList<>();
         for (char symbol : symbols) {
             result.add(this.get(symbol, dialect));
         }

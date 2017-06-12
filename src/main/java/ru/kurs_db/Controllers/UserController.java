@@ -46,7 +46,15 @@ public class UserController extends InferiorController {
         }
         httpSession.setAttribute("userId", user.getId());
         httpSession.setAttribute("username", user.getUsername());
-        httpSession.setAttribute("isAdmin",jdbcRolesDAO.getRole(user.getUsername()) == UserRole.role_type.ADMIN);
+        UserRole.role_type type = jdbcRolesDAO.getRole(user.getUsername());
+        if(type == UserRole.role_type.ADMIN) {
+            httpSession.setAttribute("isAdmin", true);
+            httpSession.setAttribute("isModerator", true);
+        } else {
+            httpSession.setAttribute("isAdmin",false);
+            httpSession.setAttribute("isModerator",type == UserRole.role_type.MODERATOR);
+        }
+
         return ResponseEntity.status(HttpStatus.OK).body(
                 new SuccessUserResponse(user.getId(), messageSource.getMessage("messages.ok", null, Locale.ENGLISH), null));
     }
