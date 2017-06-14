@@ -76,6 +76,11 @@ public class DictionaryController extends InferiorController {
     @RequestMapping(value = "/symbols", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<SymbolWithURL>> symbols(HttpSession httpSession) throws IOException, DbxException {
         List<SymbolWithURL> results = this.jdbcSymbolsDAO.getAllSymbols();
+        for (Iterator iter = results.iterator(); iter.hasNext();){
+            SymbolWithURL tmp = (SymbolWithURL) iter.next();
+            String url = this.filestorage.getfilelink(tmp.getFile_name());
+            tmp.setUrl(url);
+        }
         return ResponseEntity.status(HttpStatus.OK).body(results);
     }
 }

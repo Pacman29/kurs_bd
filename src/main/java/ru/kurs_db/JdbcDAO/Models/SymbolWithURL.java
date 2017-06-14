@@ -11,6 +11,7 @@ public class SymbolWithURL {
     private Integer file_id;
     private String description;
     private String file_name;
+    private String url;
 
     public SymbolWithURL(@NotNull String symbol, @NotNull String dialect, @NotNull Integer file_id, String description, String file_name) {
         this.symbol = symbol;
@@ -18,6 +19,15 @@ public class SymbolWithURL {
         this.file_id = file_id;
         this.description = description;
         this.file_name = file_name;
+        this.url = "";
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getSymbol() {
