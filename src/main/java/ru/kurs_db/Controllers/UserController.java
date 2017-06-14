@@ -32,6 +32,9 @@ public class UserController extends InferiorController {
         final User user = jdbcUserDAO.insert(view.getUsername(), view.getEmail(), hashedPassword);
         httpSession.setAttribute("userId", user.getId());
         httpSession.setAttribute("username", user.getUsername());
+        httpSession.setAttribute("email",user.getEmail());
+        httpSession.setAttribute("isAdmin",false);
+        httpSession.setAttribute("isModerator",false);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 new SuccessUserResponse(user.getId(), messageSource.getMessage("messages.created", null, Locale.ENGLISH), null));
@@ -46,6 +49,7 @@ public class UserController extends InferiorController {
         }
         httpSession.setAttribute("userId", user.getId());
         httpSession.setAttribute("username", user.getUsername());
+        httpSession.setAttribute("email",user.getEmail());
         UserRole.role_type type = jdbcRolesDAO.getRole(user.getUsername());
         if(type == UserRole.role_type.ADMIN) {
             httpSession.setAttribute("isAdmin", true);
@@ -81,9 +85,10 @@ public class UserController extends InferiorController {
         final String hashedPassword = view.getPassword() == null ? null : passwordEncoder().encode(view.getPassword());
         final User user = jdbcUserDAO.update(userId, view.getUsername(), view.getEmail(), hashedPassword);
         httpSession.setAttribute("username", user.getUsername());
+        httpSession.setAttribute("email",user.getEmail());
         return ResponseEntity.status(HttpStatus.OK).body(
                 new SuccessUserResponse(userId, messageSource.getMessage("messages.ok", null, Locale.ENGLISH),
-                        new UserPublicView(user)));
+                        new UserPublicView(httpSession)));
     }
 
     @RequestMapping(value = "/data", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -96,7 +101,7 @@ public class UserController extends InferiorController {
         final User user = jdbcUserDAO.findById(userId);
         return ResponseEntity.status(HttpStatus.OK).body(
                 new SuccessUserResponse(userId, messageSource.getMessage("messages.ok", null, Locale.ENGLISH),
-                        new UserPublicView(user)));
+                        new UserPublicView(httpSession)));
     }
 
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
