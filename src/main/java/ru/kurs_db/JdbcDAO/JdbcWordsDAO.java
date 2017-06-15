@@ -46,7 +46,10 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO {
         sql.delete(sql.length() - 1, sql.length());
         sql.append(" WHERE id = ? RETURNING *");
         tmp.add(word_id);
-        return this.getJdbcTemplate().queryForObject(sql.toString(), tmp.toArray(), readWord);
+        return this.getJdbcTemplate().queryForObject(sql.toString(), tmp.toArray(), (rs, rowNum) -> {
+            return new Word(rs.getInt("id"),rs.getString("word"),rs.getString("slang"),
+                    rs.getString("dialect"),rs.getString("description"),rs.getInt("file_id"));
+        });
     }
 
     @Override

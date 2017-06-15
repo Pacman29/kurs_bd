@@ -45,15 +45,18 @@ public class DictionaryManageController extends InferiorController {
     }
 
     @RequestMapping(value = "/createword", method = RequestMethod.POST)
-    public ResponseEntity<Response> createword(@RequestParam("json") final String json, @RequestParam("file") MultipartFile file, HttpSession httpSession) throws IOException, DbxException {
+    public ResponseEntity<Response> createword(@RequestParam("word") final String word,
+                                               @RequestParam("dialect") final String dialect,
+                                               @RequestParam("slang") final String slang,
+                                               @RequestParam("description") final String description,
+                                               @RequestParam("file") MultipartFile file, HttpSession httpSession) throws IOException, DbxException {
         if (!(Boolean) httpSession.getAttribute("isModerator")) {
             throw new ErrorAccessException();
         }
-        CreateWordView view = new ObjectMapper().readValue(json, CreateWordView.class);
         FileMetadata savefile = filestorage.savefile(file);
         Objfile created_file = this.jdbcJdbcObjfilesDAO.create("/"+savefile.getName());
-        Word created_word = this.jdbcWordsDAO.create(view.getWord(), view.getSlang(), view.getDialect(),
-                created_file.getId(), view.getdescription());
+        Word created_word = this.jdbcWordsDAO.create(word, slang, dialect,
+                created_file.getId(), description);
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
                 (String) httpSession.getAttribute("username")));
     }
