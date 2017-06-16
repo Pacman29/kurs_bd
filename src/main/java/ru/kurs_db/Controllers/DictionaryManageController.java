@@ -91,7 +91,7 @@ public class DictionaryManageController extends InferiorController {
             throw new ErrorAccessException();
         }
         FileMetadata savefile = filestorage.savefile(file);
-        Objfile created_file = this.jdbcJdbcObjfilesDAO.create(savefile.getName());
+        Objfile created_file = this.jdbcJdbcObjfilesDAO.create("/"+savefile.getName());
         Symbol created_symbol = this.jdbcSymbolsDAO.create(symbol,
                 dialect,
                 created_file.getId(),
