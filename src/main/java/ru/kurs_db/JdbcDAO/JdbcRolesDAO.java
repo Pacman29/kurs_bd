@@ -42,7 +42,7 @@ public class JdbcRolesDAO extends JdbcInferiorDAO implements RolesDAO {
             return this.deleteRole(username);
         }
         return this.getJdbcTemplate().queryForObject("INSERT INTO roles (role, username) VALUES (?, ?) RETURNING *",
-                new Object[]{type.name(), username, type.name(), username}, readUserRole);
+                new Object[]{type.name(), username}, readUserRole);
     }
 
     @Override
