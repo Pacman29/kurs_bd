@@ -41,8 +41,7 @@ public class JdbcRolesDAO extends JdbcInferiorDAO implements RolesDAO {
         if (type == UserRole.role_type.USUAL) {
             return this.deleteRole(username);
         }
-        return this.getJdbcTemplate().queryForObject("INSERT INTO roles (role, username) VALUES (?, ?) " +
-                "ON CONFLICT (username) DO UPDATE SET role = ? WHERE roles.username = ? RETURNING *",
+        return this.getJdbcTemplate().queryForObject("INSERT INTO roles (role, username) VALUES (?, ?) RETURNING *",
                 new Object[]{type.name(), username, type.name(), username}, readUserRole);
     }
 
