@@ -69,8 +69,8 @@ public class JdbcWordsDAO extends JdbcInferiorDAO implements WordsDAO {
 
     @Override
     public Word get(@NotNull Integer id) {
-        String sql = "SELECT * FROM words JOIN objfiles ON (words.file_id = objfiles.id) WHERE id = ?";
-        return this.getJdbcTemplate().queryForObject(sql, new Object[]{id}, readWord);
+        String sql = "SELECT * FROM words JOIN objfiles ON (words.file_id = objfiles.id) WHERE words.id = ?";
+        return this.getJdbcTemplate().queryForObject(sql, new Object[]{id.intValue()}, readWord);
     }
 
     @Override

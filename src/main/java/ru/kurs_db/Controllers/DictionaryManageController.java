@@ -57,6 +57,7 @@ public class DictionaryManageController extends InferiorController {
         Objfile created_file = this.jdbcJdbcObjfilesDAO.create("/"+savefile.getName());
         Word created_word = this.jdbcWordsDAO.create(word, slang, dialect,
                 created_file.getId(), description);
+
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
                 (String) httpSession.getAttribute("username")));
     }
