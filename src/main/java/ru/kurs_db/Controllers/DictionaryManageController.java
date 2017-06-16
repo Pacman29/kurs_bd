@@ -83,17 +83,19 @@ public class DictionaryManageController extends InferiorController {
     }
 
     @RequestMapping(value = "/createsymbol", method = RequestMethod.POST)
-    public ResponseEntity<Response> createsymbol(@RequestParam("json") final String json, @RequestParam("file") MultipartFile file, HttpSession httpSession) throws IOException, DbxException {
+    public ResponseEntity<Response> createsymbol(@RequestParam("symbol") final String symbol,
+                                                 @RequestParam("dialect") final String dialect,
+                                                 @RequestParam("description") final String description,
+                                                 @RequestParam("file") MultipartFile file, HttpSession httpSession) throws IOException, DbxException {
         if (!(Boolean) httpSession.getAttribute("isModerator")) {
             throw new ErrorAccessException();
         }
-        CreateSymbolView view = new ObjectMapper().readValue(json, CreateSymbolView.class);
         FileMetadata savefile = filestorage.savefile(file);
         Objfile created_file = this.jdbcJdbcObjfilesDAO.create(savefile.getName());
-        Symbol created_symbol = this.jdbcSymbolsDAO.create(view.getSymbol(),
-                view.getDialect(),
+        Symbol created_symbol = this.jdbcSymbolsDAO.create(symbol,
+                dialect,
                 created_file.getId(),
-                view.getdescription());
+                description);
         return ResponseEntity.status(HttpStatus.OK).body(new SuccessDictionaryManageResponse(
                 (String) httpSession.getAttribute("username")));
     }
