@@ -69,6 +69,7 @@ public class InferiorController {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public Response handleDataAccessException(DataAccessException e) {
+        //return new ErrorResponse(messageSource.getMessage("messages.bad-request", null, Locale.ENGLISH));
         return new ErrorResponse(messageSource.getMessage("messages.bad-request", null, Locale.ENGLISH));
     }
 
